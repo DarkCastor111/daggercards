@@ -1,0 +1,18 @@
+# Environnement virtuel
+venv_DaggerHeart/
+# Environnement
+.env
+.bat
+# Fichiers .bak
+*.bak
+# Fichiers d'exécution
+__pycache__
+*.pyc
+# Tests et logs
+*.log
+# Database
+db.sqlite3
+# Media
+pdf/
+Images/
+
