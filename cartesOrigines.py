@@ -81,7 +81,7 @@ def ajouter_cartes(story, type_carte, lang):
         story.append(FrameBreak())  
     
 
-def exe():
+def exe_unitaire():
         
 
     titre_carte="origine"

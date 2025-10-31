@@ -15,114 +15,168 @@ import common
 from translator import translate
 import firstPage
 
-rang = 4
-if rang == 1:
-    specialisations_a_imprimer = ["foundations"]
-elif rang == 2:
-    specialisations_a_imprimer = ["foundations"]
-elif rang == 3:
-    specialisations_a_imprimer = ["foundations", "specializations"]
-else:
-    specialisations_a_imprimer = ["foundations", "specializations", "masteries"]
+def ajouter_cartes(story, rang, lang):
+    if rang == "1":
+        specialisations_a_imprimer = ["foundations"]
+    elif rang == "2":
+        specialisations_a_imprimer = ["foundations"]
+    elif rang == "3":
+        specialisations_a_imprimer = ["foundations", "specializations"]
+    else:
+        specialisations_a_imprimer = ["foundations", "specializations", "masteries"]
+    
+    # Charger le JSON
+    with open(common.DIR_JSON + f"{lang}/subclasses_{lang}.json", "r", encoding="utf-8") as f:
+        cartes = json.load(f)
+
+    for i, carte in enumerate(cartes):
+
+        for carte_type in specialisations_a_imprimer:
+
+            # Nom Sous Classe
+            titre = f"""
+            {carte["name"].upper()}
+            """
+            #pg_domain = Paragraph(titre, card_domain_style)
+            pg_titre = [[Paragraph(titre, common.styles["CardTitle"])]]
+            tbl_domain = Table(pg_titre)
+            tbl_domain.setStyle(TableStyle([('BACKGROUND',(0,0),(0,0),['HORIZONTAL', common.domain_bg_colors.get(carte["domain_1"], colors.white),common.domain_bg_colors.get(carte["domain_2"], colors.white)]),
+                                            ]))
+
+            story.append(tbl_domain)
+
+            # Type de Carte
+            crt_tp=f"{translate(carte_type, lang)}"
+            pg_type = Paragraph(crt_tp, common.styles["CardSubTitle"])
+            story.append(pg_type)
+
+            # Description, seulement sur la première carte
+            if carte_type == "foundations":
+                crt_desc=f"""{carte["description"]}"""
+                pg_desc = Paragraph(crt_desc, common.styles["CardText"])
+                story.append(pg_desc)
+            
+            # Capacités du type de carte
+            for j, capa in enumerate(carte[carte_type]):
+                capacite = f"""<b>{capa["name"]}</b>&nbsp;:&nbsp;{markdown2.markdown(capa["text"].replace("\n", "<br/>"))}"""
+                pg_capa = Paragraph(capacite, common.styles["CardText"])
+                story.append(pg_capa)
+
+            # Informations additionnelles
+            spe = f"""{translate('sous classe de', lang)} {carte["class"].upper()}"""
+            pg_spe = Paragraph(spe, common.styles["CardSub"])
+            story.append(pg_spe)
+
+            if carte_type == "foundations" and carte.get("spellcast_trait") :
+                inc = f"""{translate('trait incantation', lang)} {carte["spellcast_trait"]}"""
+                pg_inc = Paragraph(inc, common.styles["CardSub"])
+                story.append(pg_inc)
+
+            # Passe à la carte suivante
+            story.append(FrameBreak())  
 
 
-# Charger le JSON
-with open(common.DIR_JSON + f"{common.langage}/subclasses_{common.langage}.json", "r", encoding="utf-8") as f:
-    cartes = json.load(f)
-
-# Création du document
-doc = BaseDocTemplate(f"pdf/subclasses_{common.langage}.pdf", pagesize=A4)
-
-# Styles
-"""
-styles = getSampleStyleSheet()
-styles.add(ParagraphStyle(name="CardDomain", fontSize=11, leading=18, alignment=0, textColor=colors.black, fontName="Helvetica-Bold"))
-styles.add(ParagraphStyle(name="CardTitle", fontSize=10, leading=12, alignment=1, textColor=colors.black, fontName="Helvetica-Bold", spaceAfter=8))
-styles.add(ParagraphStyle(name="CardSub", fontSize=9, leading=10, alignment=2, textColor=colors.black, fontName="Helvetica-Bold"))
-styles.add(ParagraphStyle(name="CardText", fontSize=8, leading=9, alignment=4, fontName="Helvetica", spaceAfter=4))
-styles.add(ParagraphStyle(name="CardFooter", fontSize=7, leading=8, alignment=0, textColor=colors.grey, fontName="Helvetica-Oblique"))
-styles.add(ParagraphStyle(name="CardSubTitle", fontSize=10, leading=11, alignment=1, textColor=colors.black, fontName="Helvetica-Oblique", spaceAfter=4, spaceBefore=4))
-"""
+def exe_unitaire():
+    rang = 4
+    if rang == 1:
+        specialisations_a_imprimer = ["foundations"]
+    elif rang == 2:
+        specialisations_a_imprimer = ["foundations"]
+    elif rang == 3:
+        specialisations_a_imprimer = ["foundations", "specializations"]
+    else:
+        specialisations_a_imprimer = ["foundations", "specializations", "masteries"]
 
 
-# Cadre des cartes (3x3 par page)
-frames = common.cards_frames
+    # Charger le JSON
+    with open(common.DIR_JSON + f"{common.langage}/subclasses_{common.langage}.json", "r", encoding="utf-8") as f:
+        cartes = json.load(f)
 
-# Définition du template pour la première page
-template_ppage = firstPage.ppage_template
-# Définition du template pour les cartes
-template_cartes = PageTemplate(id="grid", frames=frames, onPage=add_background)
+    # Création du document
+    doc = BaseDocTemplate(f"pdf/subclasses_{common.langage}.pdf", pagesize=A4)
 
-doc.addPageTemplates([firstPage.ppage_template, template_cartes])
+    # Styles
+    """
+    styles = getSampleStyleSheet()
+    styles.add(ParagraphStyle(name="CardDomain", fontSize=11, leading=18, alignment=0, textColor=colors.black, fontName="Helvetica-Bold"))
+    styles.add(ParagraphStyle(name="CardTitle", fontSize=10, leading=12, alignment=1, textColor=colors.black, fontName="Helvetica-Bold", spaceAfter=8))
+    styles.add(ParagraphStyle(name="CardSub", fontSize=9, leading=10, alignment=2, textColor=colors.black, fontName="Helvetica-Bold"))
+    styles.add(ParagraphStyle(name="CardText", fontSize=8, leading=9, alignment=4, fontName="Helvetica", spaceAfter=4))
+    styles.add(ParagraphStyle(name="CardFooter", fontSize=7, leading=8, alignment=0, textColor=colors.grey, fontName="Helvetica-Oblique"))
+    styles.add(ParagraphStyle(name="CardSubTitle", fontSize=10, leading=11, alignment=1, textColor=colors.black, fontName="Helvetica-Oblique", spaceAfter=4, spaceBefore=4))
+    """
 
-# Construction du contenu
-story = []
 
-# Première page
-titre_ppage = translate("ppage titre sous classe" ,common.langage)
-sstitre_ppage = f"""{translate("ppage sstitre rang" ,common.langage)} {rang} - """
-for spe in specialisations_a_imprimer:
-    spe_traduite = f"{translate(spe, common.langage)} "
-    sstitre_ppage += spe_traduite
-sstitre_ppage += f"""<br/>
-{translate("ppage sstitre langue", common.langage)} {common.langage}"""
+    # Cadre des cartes (3x3 par page)
+    frames = common.cards_frames
 
-firstPage.ajouter_ppage(story, titre_ppage, sstitre_ppage)
+    # Définition du template pour la première page
+    template_ppage = firstPage.ppage_template
+    # Définition du template pour les cartes
+    template_cartes = PageTemplate(id="grid", frames=frames, onPage=add_background)
 
-# Pages suivantes
-for i, carte in enumerate(cartes):
+    doc.addPageTemplates([firstPage.ppage_template, template_cartes])
 
-    for carte_type in specialisations_a_imprimer:
+    # Construction du contenu
+    story = []
 
-        # Nom Specialisation
-        """
-        card_titre_style = ParagraphStyle(
-            name="CardTitre_" + carte["class"],
-            parent=common.styles["CardTitle"],
-            textColor=colors.snow
-        )
-        """
+    # Première page
+    titre_ppage = translate("ppage titre sous classe" ,common.langage)
+    sstitre_ppage = f"""{translate("ppage sstitre rang" ,common.langage)} {rang} - """
+    for spe in specialisations_a_imprimer:
+        spe_traduite = f"{translate(spe, common.langage)} "
+        sstitre_ppage += spe_traduite
+    sstitre_ppage += f"""<br/>
+    {translate("ppage sstitre langue", common.langage)} {common.langage}"""
 
-        titre = f"""
-        {carte["name"].upper()}
-        """
-        #pg_domain = Paragraph(titre, card_domain_style)
-        pg_titre = [[Paragraph(titre, common.styles["CardTitle"])]]
-        tbl_domain = Table(pg_titre)
-        tbl_domain.setStyle(TableStyle([('BACKGROUND',(0,0),(0,0),['HORIZONTAL', common.domain_bg_colors.get(carte["domain_1"], colors.white),common.domain_bg_colors.get(carte["domain_2"], colors.white)]),
-                                        ]))
+    firstPage.ajouter_ppage(story, titre_ppage, sstitre_ppage)
 
-        story.append(tbl_domain)
+    # Pages suivantes
+    for i, carte in enumerate(cartes):
 
-        # Type de Carte
-        crt_tp=f"{translate(carte_type, common.langage)}"
-        pg_type = Paragraph(crt_tp, common.styles["CardSubTitle"])
-        story.append(pg_type)
+        for carte_type in specialisations_a_imprimer:
 
-        # Description, seulement sur la première carte
-        if carte_type == "foundations":
-            crt_desc=f"""{carte["description"]}"""
-            pg_desc = Paragraph(crt_desc, common.styles["CardText"])
-            story.append(pg_desc)
-        
-        # Capacités du type de carte
-        for j, capa in enumerate(carte[carte_type]):
-            capacite = f"""<b>{capa["name"]}</b>&nbsp;:&nbsp;{markdown2.markdown(capa["text"].replace("\n", "<br/>"))}"""
-            pg_capa = Paragraph(capacite, common.styles["CardText"])
-            story.append(pg_capa)
+            # Nom Sous Classe
+            titre = f"""
+            {carte["name"].upper()}
+            """
+            #pg_domain = Paragraph(titre, card_domain_style)
+            pg_titre = [[Paragraph(titre, common.styles["CardTitle"])]]
+            tbl_domain = Table(pg_titre)
+            tbl_domain.setStyle(TableStyle([('BACKGROUND',(0,0),(0,0),['HORIZONTAL', common.domain_bg_colors.get(carte["domain_1"], colors.white),common.domain_bg_colors.get(carte["domain_2"], colors.white)]),
+                                            ]))
 
-        # Informations additionnelles
-        spe = f"""{translate('sous classe de',common.langage)} {carte["class"].upper()}"""
-        pg_spe = Paragraph(spe, common.styles["CardSub"])
-        story.append(pg_spe)
+            story.append(tbl_domain)
 
-        if carte_type == "foundations" and carte.get("spellcast_trait") :
-            inc = f"""{translate('trait incantation',common.langage)} {carte["spellcast_trait"]}"""
-            pg_inc = Paragraph(inc, common.styles["CardSub"])
-            story.append(pg_inc)
+            # Type de Carte
+            crt_tp=f"{translate(carte_type, common.langage)}"
+            pg_type = Paragraph(crt_tp, common.styles["CardSubTitle"])
+            story.append(pg_type)
 
-        # Passe à la carte suivante
-        story.append(FrameBreak())  
+            # Description, seulement sur la première carte
+            if carte_type == "foundations":
+                crt_desc=f"""{carte["description"]}"""
+                pg_desc = Paragraph(crt_desc, common.styles["CardText"])
+                story.append(pg_desc)
+            
+            # Capacités du type de carte
+            for j, capa in enumerate(carte[carte_type]):
+                capacite = f"""<b>{capa["name"]}</b>&nbsp;:&nbsp;{markdown2.markdown(capa["text"].replace("\n", "<br/>"))}"""
+                pg_capa = Paragraph(capacite, common.styles["CardText"])
+                story.append(pg_capa)
 
-# Génération du PDF
-doc.build(story)
+            # Informations additionnelles
+            spe = f"""{translate('sous classe de',common.langage)} {carte["class"].upper()}"""
+            pg_spe = Paragraph(spe, common.styles["CardSub"])
+            story.append(pg_spe)
+
+            if carte_type == "foundations" and carte.get("spellcast_trait") :
+                inc = f"""{translate('trait incantation',common.langage)} {carte["spellcast_trait"]}"""
+                pg_inc = Paragraph(inc, common.styles["CardSub"])
+                story.append(pg_inc)
+
+            # Passe à la carte suivante
+            story.append(FrameBreak())  
+
+    # Génération du PDF
+    doc.build(story)

@@ -6,12 +6,13 @@ from reportlab.lib.pagesizes import A4
 import common
 import translator
 import firstPage
-import cartesOrigines
+import cartesOrigines, cartesSousClasses, cartesDomaines # cartesClasses 
 
 print("Nom du script :", sys.argv[0])
 
 PARAM_LANG = "EN"
 PARAM_RANG = 1
+PARAM_CLASSE = "TOUS"
 
 
 if len(sys.argv) > 1:
@@ -44,8 +45,15 @@ firstPage.ajouter_ppage(story, titre_ppage, sstitre_ppage)
 
 # Pages suivantes : cartes origines
 cartesOrigines.ajouter_cartes(story, "origine", PARAM_LANG)
-# Pages suivantes : cartes ascendance
+# Pages suivantes : cartes ascendances
 cartesOrigines.ajouter_cartes(story, "ascendance", PARAM_LANG)
+# Pages suivantes : cartes classes
+
+# Pages suivantes : cartes sous classes
+cartesSousClasses.ajouter_cartes(story, PARAM_RANG, PARAM_LANG)
+# Pages suivantes : cartes domaines
+cartesDomaines.ajouter_cartes(story, PARAM_RANG, PARAM_CLASSE, PARAM_LANG)
+
 
 # Génération du PDF
 doc.build(story)
