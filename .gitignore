@@ -2,8 +2,8 @@
 venv_DaggerHeart/
 # Environnement
 .env
-.bat
 # Fichiers .bak
+*.bat
 *.bak
 # Fichiers d'exécution
 __pycache__
