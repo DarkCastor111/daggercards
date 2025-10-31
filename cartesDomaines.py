@@ -15,20 +15,26 @@ import common
 from translator import translate
 import firstPage
 
+def get_niveaux_a_imprimer(tier):
+    # Détermination des niveaux à imprimer en fonction du rang
+    if tier == "1":
+        liste_niveaux = ["1"]
+    elif tier == "2":
+        liste_niveaux = ["1","2","3","4"]
+    elif tier == "3":
+        liste_niveaux = ["1","2","3","4","5","6","7"]
+    else:
+        liste_niveaux = ["1","2","3","4","5","6","7","8","9","10"]
+    return liste_niveaux
+
+
 def ajouter_cartes(story, rang, classe, lang):
     # Charger le JSON
     with open(common.DIR_JSON + f"{lang}/abilities_{lang}.json", "r", encoding="utf-8") as f:
         cartes = json.load(f)
 
     # Détermination des niveaux à imprimer en fonction du rang
-    if rang == "1":
-        niveaux_a_imprimer = ["1"]
-    elif rang == "2":
-        niveaux_a_imprimer = ["1","2","3","4"]
-    elif rang == "3":
-        niveaux_a_imprimer = ["1","2","3","4","5","6","7"]
-    else:
-        niveaux_a_imprimer = ["1","2","3","4","5","6","7","8","9","10"]
+    niveaux_a_imprimer = get_niveaux_a_imprimer(rang)
 
     # Détermination des domaines à imprimer (cas pack classes)
     domaines_a_imprimer = ["Arcana","Blade","Bone","Codex","Grace","Midnight","Sage","Splendor","Valor"]
@@ -76,42 +82,17 @@ def ajouter_cartes(story, rang, classe, lang):
                 story.append(FrameBreak())  
 
 
-def exe_unitaire():
+def exe_unitaire(rang, classe, lang):
 
     # Charger le JSON
-    with open(common.DIR_JSON + f"{common.langage}/abilities_{common.langage}.json", "r", encoding="utf-8") as f:
+    with open(common.DIR_JSON + f"{lang}/abilities_{lang}.json", "r", encoding="utf-8") as f:
         cartes = json.load(f)
 
     # Création du document
-    doc = BaseDocTemplate(f"pdf/abilities_{common.langage}.pdf", pagesize=A4)
-
-
+    doc = BaseDocTemplate(f"pdf/abilities_{lang}.pdf", pagesize=A4)
 
     domaines_a_imprimer = ["Arcana","Blade","Bone","Codex","Grace","Midnight","Sage","Splendor","Valor"]
     #domaines_a_imprimer = ["Arcana","Bone","Blade"]
-
-    rang = 1
-    if rang == 1:
-        niveaux_a_imprimer = ["1"]
-    elif rang == 2:
-        niveaux_a_imprimer = ["1","2","3","4"]
-    elif rang == 3:
-        niveaux_a_imprimer = ["1","2","3","4","5","6","7"]
-    else:
-        niveaux_a_imprimer = ["1","2","3","4","5","6","7","8","9","10"]
-
-
-
-    # Styles
-    """
-    styles = getSampleStyleSheet()
-    styles.add(ParagraphStyle(name="CardType", fontSize=11, leading=18, alignment=0, textColor=colors.black, fontName="Helvetica-Bold"))
-    styles.add(ParagraphStyle(name="CardTitle", fontSize=10, leading=12, alignment=1, textColor=colors.black, fontName="Helvetica-Bold", spaceBefore=4, spaceAfter=4))
-    styles.add(ParagraphStyle(name="CardSub", fontSize=9, leading=8, alignment=2, textColor=colors.black, fontName="Helvetica-Bold", spaceAfter=4))
-    styles.add(ParagraphStyle(name="CardText", fontSize=8, leading=9, alignment=4, fontName="Helvetica", spaceAfter=4))
-    styles.add(ParagraphStyle(name="CardFooter", fontSize=7, leading=8, alignment=0, textColor=colors.grey, fontName="Helvetica-Oblique"))
-    """
-
 
     # Cadre des cartes (3x3 par page)
     frames = common.cards_frames
@@ -127,60 +108,15 @@ def exe_unitaire():
     story = []
 
     # Première page
-    titre_ppage = translate("ppage titre domaine", common.langage)
-    sstitre_ppage = f"""{translate("ppage sstitre rang", common.langage)} {rang}<br/>
-    {translate("ppage sstitre langue", common.langage)} {common.langage}
+    titre_ppage = translate("ppage titre domaine", lang)
+    sstitre_ppage = f"""{translate("ppage sstitre rang", lang)} {rang}<br/>
+    {translate("ppage sstitre classe", lang)} {classe}<br/>
+    {translate("ppage sstitre langue", lang)} {lang}
     """
     firstPage.ajouter_ppage(story, titre_ppage, sstitre_ppage)
 
     # Pages suivantes
-    for domaine in domaines_a_imprimer:
-
-        for i, carte in enumerate(cartes):
-            niveau_carte = carte['level']
-            domaine_carte = carte['domain']
-            if niveau_carte in niveaux_a_imprimer and domaine_carte == domaine :
-                """
-                # Dynamically create a style with the background color for this domain
-                card_domain_style = ParagraphStyle(
-                    name="CardTitle_" + domaine_carte,
-                    parent=common.styles["CardTitle"],
-                    #backColor=domain_bg_colors.get(domaine_carte, colors.white),
-                    textColor=common.domain_txt_colors.get(domaine_carte, colors.black)
-                )
-                """
-
-                # Titre : Domaine - Niveau - Type
-                titre = f"""
-                &nbsp;{carte["domain"].upper()} - {carte['level']} - {carte['type'].upper()}
-                """
-                pg_titre = [[Paragraph(titre, common.styles["CardTitle"])]]
-
-                tbl_titre = Table(pg_titre)
-                tbl_titre.setStyle(TableStyle([('BACKGROUND',(0,0),(0,0),common.domain_bg_colors.get(domaine_carte, colors.white))]))
-                story.append(tbl_titre)
-
-                # Domaine et niveau de la Carte
-                #story.append(pg_domain)
-                
-                # Nom de la carte
-                pg_title = Paragraph(carte["name"].upper(), common.styles["CardName"])
-                story.append(pg_title)
-
-
-                # Texte
-                pg_text = Paragraph(markdown2.markdown(carte["text"].replace("\n", "<br/>")), common.styles["CardText"])
-                story.append(pg_text)
-
-                # Infos secondaires
-                infoSecondaires = f"""
-                <b>{translate("domaine",common.langage)} - {translate("rappel",common.langage)}:</b> {carte['recall']} <b>Stress</b>
-                """
-                pg_sub = Paragraph(infoSecondaires, common.styles["CardSub"])
-                story.append(pg_sub)
-
-                # Passe à la carte suivante
-                story.append(FrameBreak())  
+    ajouter_cartes(story, rang, classe, lang)
 
     # Génération du PDF
     doc.build(story)

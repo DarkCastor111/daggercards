@@ -46,6 +46,7 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
     "ppage sstitre rang": {"en": "Tiers:", "fr": "Rang :", "es": "todo"},
     "ppage sstitre langue": {"en": "Language:", "fr": "Langue :", "es": "todo"},
     "ppage sstitre sous classe": {"en": "Type(s):", "fr": "Type(s) :", "es": "todo"},
+    "ppage sstitre classe": {"en": "Class:", "fr": "Classe :", "es": "todo"},
     "ppage pack complet": {"en": "COMPLETE PACK", "fr": "PACK COMPLET", "es": "todo"},
 
     "fp copyright": {"en": "This product includes materials from the Daggerheart System Reference Document 1.0, ©Critical Role, LLC. under the terms of the Darrington Press Community Gaming (DPCGL) License. More information can be found at https://www.daggerheart.com. There are no previous modifications by others.", 

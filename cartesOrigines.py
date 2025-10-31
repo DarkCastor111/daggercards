@@ -81,18 +81,14 @@ def ajouter_cartes(story, type_carte, lang):
         story.append(FrameBreak())  
     
 
-def exe_unitaire():
+def exe_unitaire(type_carte, lang):
         
+    fichier_json = common.DIR_JSON + f"/{lang}/communities_{lang}.json"
+    fichier_pdf = f"pdf/communities_{lang}.pdf"
 
-    titre_carte="origine"
-    #titre_carte="ascendance"
-
-    fichier_json = common.DIR_JSON + f"/{common.langage}/communities_{common.langage}.json"
-    fichier_pdf = f"pdf/communities_{common.langage}.pdf"
-
-    if titre_carte == "ascendance":
-        fichier_json = common.DIR_JSON + f"/{common.langage}/ancestries_{common.langage}.json"
-        fichier_pdf = f"pdf/ancestries_{common.langage}.pdf"
+    if type_carte == "ascendance":
+        fichier_json = common.DIR_JSON + f"/{lang}/ancestries_{lang}.json"
+        fichier_pdf = f"pdf/ancestries_{lang}.pdf"
 
     # Charger le JSON
     with open(fichier_json, "r", encoding="utf-8") as f:
@@ -120,65 +116,12 @@ def exe_unitaire():
     story = []
 
     # Première page
-    titre_ppage = translate("ppage titre " + titre_carte, common.langage)
-    sstitre_ppage = f"""{translate("ppage sstitre langue", common.langage)} {common.langage}
-    """
+    titre_ppage = translate("ppage titre " + type_carte, lang)
+    sstitre_ppage = f"""{translate("ppage sstitre langue", lang)} {lang}"""
     firstPage.ajouter_ppage(story, titre_ppage, sstitre_ppage)
 
-    # Pages suivantes
-    for i, carte in enumerate(cartes):
-
-        # Titre de la carte
-        titre=f"&nbsp;{carte["name"].upper()}"
-
-        if titre_carte == "origine":
-            card_titre_style = ParagraphStyle(
-                name="CardTitre_Origine",
-                parent=common.styles["CardTitle"],
-                #textColor=colors.darkslategray, backColor=colors.darkturquoise
-                textColor=colors.darkslategray
-            )
-        else:
-            card_titre_style = ParagraphStyle(
-                name="CardTitre_Heritage",
-                parent=common.styles["CardTitle"],
-                #textColor=colors.maroon, backColor=colors.orange
-                textColor=colors.maroon
-            )
-        
-        pg_titre = [[Paragraph(titre, card_titre_style)]]
-        
-        tbl_titre = Table(pg_titre)
-        if titre_carte == "origine":
-            tbl_titre.setStyle(TableStyle([('BACKGROUND',(0,0),(0,0),colors.darkturquoise)]))
-        else:
-            tbl_titre.setStyle(TableStyle([('BACKGROUND',(0,0),(0,0),colors.orange)]))
-        story.append(tbl_titre)
-
-        story.append(Spacer(1, 0.2*cm))
-
-        # Présentation
-        resume = common.premieres_phrases(carte["description"], 2)
-        pg_desc = Paragraph(resume, common.styles["CardPres"])
-        story.append(pg_desc)
-
-
-        # Capacités
-        for j, capa in enumerate(carte["feats"]):
-            capacite = markdown2.markdown(f"""<b>{capa["name"]}</b>&nbsp;: {capa["text"]}""")
-            pg_capa = Paragraph(capacite, common.styles["CardText"])
-            story.append(pg_capa)
-
-        # Infos secondaires
-        infoSecondaires = f"""
-        {translate(titre_carte, common.langage)}
-        """
-        pg_sub = Paragraph(infoSecondaires, common.styles["CardSub"])
-        story.append(pg_sub)
-
-
-        # Passe à la carte suivante
-        story.append(FrameBreak())  
+    # Pages suivantes : cartes
+    ajouter_cartes(story, type_carte, lang)
 
     # Génération du PDF
     doc.build(story)
