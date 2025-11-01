@@ -27,6 +27,13 @@ def get_niveaux_a_imprimer(tier):
         liste_niveaux = ["1","2","3","4","5","6","7","8","9","10"]
     return liste_niveaux
 
+def get_domaines_a_imprimer(classe):
+    if classe == "Warior":
+        liste_domaines=["Arcana","Blade"]
+    else:
+        liste_domaines=["Arcana","Blade","Bone","Codex","Grace","Midnight","Sage","Splendor","Valor"]
+    return liste_domaines
+
 
 def ajouter_cartes(story, rang, classe, lang):
     # Charger le JSON
@@ -37,9 +44,8 @@ def ajouter_cartes(story, rang, classe, lang):
     niveaux_a_imprimer = get_niveaux_a_imprimer(rang)
 
     # Détermination des domaines à imprimer (cas pack classes)
-    domaines_a_imprimer = ["Arcana","Blade","Bone","Codex","Grace","Midnight","Sage","Splendor","Valor"]
-    if classe=="Warior":
-        domaines_a_imprimer = ["Arcana","Blade"]
+    domaines_a_imprimer = get_domaines_a_imprimer(classe)
+
 
     # Ajout des cartes dans la story
     for domaine in domaines_a_imprimer:
@@ -84,15 +90,8 @@ def ajouter_cartes(story, rang, classe, lang):
 
 def exe_unitaire(rang, classe, lang):
 
-    # Charger le JSON
-    with open(common.DIR_JSON + f"{lang}/abilities_{lang}.json", "r", encoding="utf-8") as f:
-        cartes = json.load(f)
-
     # Création du document
-    doc = BaseDocTemplate(f"pdf/abilities_{lang}.pdf", pagesize=A4)
-
-    domaines_a_imprimer = ["Arcana","Blade","Bone","Codex","Grace","Midnight","Sage","Splendor","Valor"]
-    #domaines_a_imprimer = ["Arcana","Bone","Blade"]
+    doc = BaseDocTemplate(f"pdf/abilities_{lang}_{rang}.pdf", pagesize=A4)
 
     # Cadre des cartes (3x3 par page)
     frames = common.cards_frames
@@ -102,7 +101,7 @@ def exe_unitaire(rang, classe, lang):
     # Définition du template pour les cartes
     template_cartes = PageTemplate(id="grid", frames=frames, onPage=add_background)
 
-    doc.addPageTemplates([firstPage.ppage_template, template_cartes])
+    doc.addPageTemplates([template_ppage, template_cartes])
 
     # Construction du contenu
     story = []

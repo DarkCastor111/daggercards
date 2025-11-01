@@ -32,7 +32,7 @@ def add_footer(canvas, doc):
             canvas.drawString(
                 x + 0.2*cm, 
                 y + 0.2*cm,
-                f">> {translate("mon blog :",langage)} https://mydhblog.com <<"
+                f">> {translate("mon blog :", langage)} https://mydhblog.com <<"
             )
 
 

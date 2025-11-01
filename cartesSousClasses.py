@@ -89,12 +89,8 @@ def exe_unitaire(rang, lang):
 
     liste_specialisations = get_specialisation_a_imprimer(rang)
 
-    # Charger le JSON
-    with open(common.DIR_JSON + f"{lang}/subclasses_{lang}.json", "r", encoding="utf-8") as f:
-        cartes = json.load(f)
-
     # Création du document
-    doc = BaseDocTemplate(f"pdf/subclasses_{lang}.pdf", pagesize=A4)
+    doc = BaseDocTemplate(f"pdf/subclasses_{lang}_{rang}.pdf", pagesize=A4)
 
     # Cadre des cartes (3x3 par page)
     frames = common.cards_frames
@@ -104,7 +100,7 @@ def exe_unitaire(rang, lang):
     # Définition du template pour les cartes
     template_cartes = PageTemplate(id="grid", frames=frames, onPage=add_background)
 
-    doc.addPageTemplates([firstPage.ppage_template, template_cartes])
+    doc.addPageTemplates([template_ppage, template_cartes])
 
     # Construction du contenu
     story = []

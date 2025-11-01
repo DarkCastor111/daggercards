@@ -83,25 +83,14 @@ def ajouter_cartes(story, type_carte, lang):
 
 def exe_unitaire(type_carte, lang):
         
-    fichier_json = common.DIR_JSON + f"/{lang}/communities_{lang}.json"
     fichier_pdf = f"pdf/communities_{lang}.pdf"
 
     if type_carte == "ascendance":
-        fichier_json = common.DIR_JSON + f"/{lang}/ancestries_{lang}.json"
         fichier_pdf = f"pdf/ancestries_{lang}.pdf"
-
-    # Charger le JSON
-    with open(fichier_json, "r", encoding="utf-8") as f:
-        cartes = json.load(f)
 
     # Création du document
     doc = BaseDocTemplate(fichier_pdf, pagesize=A4)
-
-
-    # Styles de première page
-    #styles.add(firstPage.style_titre)
-
-
+    
     # Cadre des cartes (3x3 par page)
     frames = common.cards_frames
 
@@ -110,7 +99,7 @@ def exe_unitaire(type_carte, lang):
     # Définition du template pour les cartes
     template_cartes = PageTemplate(id="grid", frames=frames, onPage=add_background)
 
-    doc.addPageTemplates([firstPage.ppage_template, template_cartes])
+    doc.addPageTemplates([template_ppage, template_cartes])
 
     # Construction du contenu
     story = []
