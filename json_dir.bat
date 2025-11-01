@@ -1,1 +1,0 @@
-set DIR_JSON=D:\Loisirs\_TravailPerso\DaggerHeart\Ressources\JSON\
