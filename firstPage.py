@@ -10,6 +10,7 @@ from translator import translate
 style_ptitre = ParagraphStyle(name="FPagePreTitle", fontSize=36, leading=38, alignment=1, textColor=colors.black, fontName="Helvetica-Bold", spaceAfter=4)
 style_titre = ParagraphStyle(name="FPageTitle", fontSize=26, leading=24, alignment=1, textColor=colors.black, fontName="Helvetica-Bold", spaceAfter=4)
 style_sstitre = ParagraphStyle(name="FPageSubTitle", fontSize=12, leading=14, alignment=1, textColor=colors.black, fontName="Helvetica", spaceAfter=4)
+style_sommaire = ParagraphStyle(name="FPageEntries", fontSize=12, leading=14, alignment=0, textColor=colors.black, fontName="Helvetica", spaceAfter=4)
 style_legal = ParagraphStyle(name="FPageLegal", fontSize=12, leading=13, alignment=4, textColor=colors.black, fontName="Helvetica", spaceAfter=4)
 
 
@@ -34,7 +35,7 @@ def getFPageParagraph(titre):
 
     return Paragraph(title_text, style_titre)
 
-def ajouter_ppage_legale(story, titre, sstitre):
+def ajouter_ppage_legale(story, titre, sstitre, sommaire):
 
     # Pré-Titre
     story.append(Spacer(1, 3*cm))
@@ -43,8 +44,6 @@ def ajouter_ppage_legale(story, titre, sstitre):
     # Titre
     story.append(Paragraph(titre, style_titre))
 
-    logo_mydhblog = Image("Images/LogoBlogAtlante_Trp.png", width=4*cm, height=4*cm)
-    logo_mydhblog.hAlign = 'CENTER'
     story.append(Spacer(1, 0.5*cm))
 
     # Sous Titre
@@ -53,8 +52,16 @@ def ajouter_ppage_legale(story, titre, sstitre):
     story.append(Spacer(1, 1.5*cm))
 
     # Logo du blog
+    logo_mydhblog = Image("Images/LogoBlogAtlante_Trp.png", width=4*cm, height=4*cm)
+    logo_mydhblog.hAlign = 'CENTER'
     story.append(logo_mydhblog)
-    story.append(Spacer(1, 6*cm))
+    story.append(Paragraph("myDHblog.com", style_sstitre))
+    story.append(Spacer(1, 1.5*cm))
+
+    # Contenu du pack
+    story.append(Paragraph(sommaire, style_sommaire))
+    story.append(Spacer(1, 1.5*cm))
+
 
 
     dh_compat = Image("Images/DH_CGL_logos_final_full_color.png", width=9.0*cm, height=2.19*cm)

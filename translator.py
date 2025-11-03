@@ -43,8 +43,9 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
     "ppage titre sous classe": {"en": "SUBCLASS CARDS", "fr": "CARTES DE SOUS-CLASSES", "es": "todo"},
     "ppage titre classe": {"en": "CLASS CARDS", "fr": "CARTES DE CLASSES", "es": "todo"},
     "ppage sstitre domaines": {"en": "Domain(s):", "fr": "Domaine(s) :", "es": "todo"},
-    "ppage sstitre rang": {"en": "Tiers:", "fr": "Rang :", "es": "todo"},
+    "ppage sstitre rang": {"en": "Tier:", "fr": "Rang :", "es": "todo"},
     "ppage sstitre langue": {"en": "Language:", "fr": "Langue :", "es": "todo"},
+    "ppage sstitre trad": {"en": "(SRD 1.0)", "fr": "(Traduction non officielle)", "es": "todo"},
     "ppage sstitre sous classe": {"en": "Type(s):", "fr": "Type(s) :", "es": "todo"},
     "ppage sstitre classe": {"en": "Class:", "fr": "Classe :", "es": "todo"},
     "ppage pack complet": {"en": "COMPLETE PACK", "fr": "PACK COMPLET", "es": "todo"},
@@ -59,7 +60,7 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
                   "es": "Darrington Press™ and the Darrington Press authorized work logo are trademarks of Critical Role, LLC and used with permission."},
 }
 
-def translate(code_word: str, target_lang: str, default: Optional[str] = None) -> Optional[str]:
+def translate(code_word: str, target_lang: str):
     """Translate a single code word to a target language.
 
     Args:
@@ -70,6 +71,8 @@ def translate(code_word: str, target_lang: str, default: Optional[str] = None) -
     Returns:
         Translated string or default
     """
+    default = "None"
+
     if not code_word:
         return default
 
@@ -87,5 +90,5 @@ def translate(code_word: str, target_lang: str, default: Optional[str] = None) -
 
 def bulk_translate(words: List[str], target_lang: str, missing: Optional[str] = None) -> List[Optional[str]]:
     """Translate a list of words to the target language."""
-    return [translate(w, target_lang, default=missing) for w in words]
+    return [translate(w, target_lang) for w in words]
 

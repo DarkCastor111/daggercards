@@ -102,7 +102,7 @@ def exe_unitaire(rang, lang):
     sstitre_ppage += f"""<br/>
     {translate("ppage sstitre langue", lang)} {lang}"""
 
-    firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage)
+    firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage, "")
 
     story.append(NextPageTemplate('grid'))
     story.append(PageBreak())

@@ -39,9 +39,19 @@ story = []
 
 # Première page
 titre_ppage = translator.translate("ppage pack complet", PARAM_LANG)
-sstitre_ppage = f"""{translator.translate("ppage sstitre langue", PARAM_LANG)} {PARAM_LANG} {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG}
+sstitre_ppage = f"""{translator.translate("ppage sstitre langue", PARAM_LANG)} {PARAM_LANG} {translator.translate("ppage sstitre trad", PARAM_LANG)}<br/> 
+{translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG}
 """
-firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage)
+
+sommaire_ppage = f"""
+- {translator.translate("ppage titre ascendance", PARAM_LANG).capitalize()} <br/>
+- {translator.translate("ppage titre origine", PARAM_LANG).capitalize()} <br/>
+- {translator.translate("ppage titre classe", PARAM_LANG).capitalize()} <br/>
+- {translator.translate("ppage titre sous classe", PARAM_LANG).capitalize()} {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG}<br/>
+- {translator.translate("ppage titre domaine", PARAM_LANG).capitalize()} {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG}<br/>
+"""
+
+firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage, sommaire_ppage)
 
 # Pages suivantes : cartes origines
 
@@ -53,6 +63,7 @@ cartesOrigines.ajouter_cartes(story, "origine", PARAM_LANG)
 cartesOrigines.ajouter_cartes(story, "ascendance", PARAM_LANG)
 
 # Pages suivantes : cartes classes
+# cartesClasses.
 
 # Pages suivantes : cartes sous classes
 cartesSousClasses.ajouter_cartes(story, PARAM_RANG, PARAM_LANG)

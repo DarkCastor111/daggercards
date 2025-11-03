@@ -29,7 +29,7 @@ styles.add(ParagraphStyle(name="CardType", fontSize=10, leading=11, alignment=1,
 def get_classes_a_imprimer(classe):
     return "TOUTES"
 
-def ajouter_cartes(story, rang, classe, lang):
+def ajouter_cartes(story, classe, lang):
     # Détermination des domaines à imprimer (cas pack classes)
     classes_a_imprimer = get_classes_a_imprimer(classe)
 
@@ -100,7 +100,7 @@ def ajouter_cartes(story, rang, classe, lang):
         # Passe à la carte suivante
         story.append(FrameBreak())  
 
-def exe_unitaire(rang, classe, lang):
+def exe_unitaire(classe, lang):
 
     # Création du document
     doc = BaseDocTemplate(f"pdf/classes_{lang}.pdf", pagesize=A4)
@@ -113,16 +113,17 @@ def exe_unitaire(rang, classe, lang):
     # Première page
     titre_ppage = translate("ppage titre classe", lang)
     sstitre_ppage = f"""{translate("ppage sstitre classe", lang)} {classe}<br/>
-    {translate("ppage sstitre langue", lang)} {lang}
+    {translate("ppage sstitre langue", lang)} {lang} {translate("ppage sstitre trad", lang)}
     """
-    firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage)
+
+    firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage, "")
 
     # Pages suivantes : cartes
     story.append(NextPageTemplate('grid'))
     story.append(PageBreak())
 
     # Pages suivantes
-    ajouter_cartes(story, rang, classe, lang)
+    ajouter_cartes(story, classe, lang)
 
     # Génération du PDF
     doc.build(story)
