@@ -11,7 +11,6 @@ from reportlab.lib.units import cm
 from reportlab.lib.utils import ImageReader
 from reportlab.lib import colors
 
-from footer import add_background
 import common
 from translator import translate
 import firstPage
@@ -72,7 +71,7 @@ def ajouter_cartes(story, type_carte, lang):
 
         # Infos secondaires
         infoSecondaires = f"""
-        {translate(type_carte, common.langage)}
+        {translate(type_carte, lang)}
         """
         pg_sub = Paragraph(infoSecondaires, common.styles["CardSub"])
         story.append(pg_sub)
@@ -91,15 +90,7 @@ def exe_unitaire(type_carte, lang):
     # Création du document
     doc = BaseDocTemplate(fichier_pdf, pagesize=A4)
     
-    # Cadre des cartes (3x3 par page)
-    frames = common.cards_frames
-
-    # Définition du template pour la première page
-    template_ppage = firstPage.ppage_template
-    # Définition du template pour les cartes
-    template_cartes = PageTemplate(id="grid", frames=frames, onPage=add_background)
-
-    doc.addPageTemplates([template_ppage, template_cartes])
+    doc.addPageTemplates(common.creer_template(lang))
 
     # Construction du contenu
     story = []
@@ -107,9 +98,12 @@ def exe_unitaire(type_carte, lang):
     # Première page
     titre_ppage = translate("ppage titre " + type_carte, lang)
     sstitre_ppage = f"""{translate("ppage sstitre langue", lang)} {lang}"""
-    firstPage.ajouter_ppage(story, titre_ppage, sstitre_ppage)
+    firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage)
 
     # Pages suivantes : cartes
+    story.append(NextPageTemplate('grid'))
+    story.append(PageBreak())
+
     ajouter_cartes(story, type_carte, lang)
 
     # Génération du PDF

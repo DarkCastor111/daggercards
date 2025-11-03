@@ -11,7 +11,7 @@ from translator import translate
 
 
 
-langage = "FR"
+#langage = "FR"
 #langage = "EN"
 #langage = "FR"
 #langage = "ES"
@@ -87,13 +87,16 @@ for row in range(rows):
             )
         )
 
+def add_background_EN(canvas, doc):
+    add_footer(canvas, doc, "EN")
+    add_watermark(canvas, doc)
 
-def add_background(canvas, doc):
-    add_footer(canvas, doc)
+def add_background_FR(canvas, doc):
+    add_footer(canvas, doc, "FR")
     add_watermark(canvas, doc)
 
 # Définir un template de page avec un pied de page
-def add_footer(canvas, doc):
+def add_footer(canvas, doc, lang):
     canvas.saveState()
     canvas.setFont("Helvetica-Oblique", 6)
 
@@ -115,7 +118,7 @@ def add_footer(canvas, doc):
             canvas.drawString(
                 x + 0.2*cm, 
                 y + 0.2*cm,
-                f">> {translate("mon blog :",langage)} https://mydhblog.com <<"
+                f">> {translate("mon blog :", lang)} https://mydhblog.com <<"
             )
 
 
@@ -152,7 +155,7 @@ def add_watermark(canvas, doc):
 
     canvas.restoreState()
 
-def creer_template():
+def creer_template(lang):
     # Définition du template pour la première page
     cadre_ppage = Frame(
         1*cm, 1*cm,
@@ -179,7 +182,12 @@ def creer_template():
                 )
             )
 
-    template_cartes = PageTemplate(id="grid", frames=frames_3x3, onPage=add_background)
+    # Définition du template pour les cartes, le background dépend de la langue
+    # Par défaut anglais
+    template_cartes = PageTemplate(id="grid", frames=frames_3x3, onPage=add_background_EN)
+    if lang == "FR":
+        template_cartes = PageTemplate(id="grid", frames=frames_3x3, onPage=add_background_FR)
+
 
     return [template_ppage, template_cartes]
 

@@ -3,7 +3,7 @@ from reportlab.platypus import Frame, PageTemplate, Paragraph, PageBreak, NextPa
 from reportlab.lib import colors
 from reportlab.lib.units import cm
 
-from common import page_height, page_width, langage
+from common import page_height, page_width
 from translator import translate
 
 
@@ -34,7 +34,7 @@ def getFPageParagraph(titre):
 
     return Paragraph(title_text, style_titre)
 
-def ajouter_ppage(story, titre, sstitre):
+def ajouter_ppage_legale(story, titre, sstitre):
 
     # Pré-Titre
     story.append(Spacer(1, 3*cm))
@@ -64,13 +64,19 @@ def ajouter_ppage(story, titre, sstitre):
     story.append(Spacer(1, 0.5*cm))
 
 
-    txt_copyright = f"""{translate("fp copyright", langage)}"""
+    txt_copyright = f"""{translate("fp copyright", "EN")}"""
     story.append(Paragraph(txt_copyright, style_legal))
-    txt_logo = f"{translate("fp logo", langage)}"
+    txt_logo = f"{translate("fp logo", "EN")}"
     story.append(Paragraph(txt_logo, style_legal))
 
+    return story
 
-    story.append(NextPageTemplate('grid'))
-    story.append(PageBreak())
+def ajouter_ppage_secondaire(story, titre):
+    # Pré-Titre
+    story.append(Spacer(1, 3*cm))
+    # Titre
+    story.append(Paragraph(titre, style_titre))
 
     return story
+
+

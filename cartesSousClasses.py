@@ -4,13 +4,12 @@ import markdown2
 
 from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Frame, PageTemplate, Table, TableStyle
-from reportlab.platypus import BaseDocTemplate, FrameBreak
+from reportlab.platypus import BaseDocTemplate, FrameBreak, PageBreak, NextPageTemplate
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import cm
 from reportlab.lib.utils import ImageReader
 from reportlab.lib import colors
 
-from footer import add_background
 import common
 from translator import translate
 import firstPage
@@ -26,7 +25,6 @@ def get_specialisation_a_imprimer(tier):
         liste_specialisations = ["foundations", "specializations", "masteries"]
 
     return liste_specialisations
-    
 
 def ajouter_cartes(story, rang, lang):
     
@@ -41,10 +39,8 @@ def ajouter_cartes(story, rang, lang):
         for carte_type in specialisations_a_imprimer:
 
             # Nom Sous Classe
-            titre = f"""
-            {carte["name"].upper()}
-            """
-            #pg_domain = Paragraph(titre, card_domain_style)
+            titre = f"""{carte["name"].upper()}"""
+
             pg_titre = [[Paragraph(titre, common.styles["CardTitle"])]]
             tbl_domain = Table(pg_titre)
             tbl_domain.setStyle(TableStyle([('BACKGROUND',(0,0),(0,0),['HORIZONTAL', common.domain_bg_colors.get(carte["domain_1"], colors.white),common.domain_bg_colors.get(carte["domain_2"], colors.white)]),
@@ -92,15 +88,7 @@ def exe_unitaire(rang, lang):
     # Création du document
     doc = BaseDocTemplate(f"pdf/subclasses_{lang}_{rang}.pdf", pagesize=A4)
 
-    # Cadre des cartes (3x3 par page)
-    frames = common.cards_frames
-
-    # Définition du template pour la première page
-    template_ppage = firstPage.ppage_template
-    # Définition du template pour les cartes
-    template_cartes = PageTemplate(id="grid", frames=frames, onPage=add_background)
-
-    doc.addPageTemplates([template_ppage, template_cartes])
+    doc.addPageTemplates(common.creer_template(lang))
 
     # Construction du contenu
     story = []
@@ -114,7 +102,10 @@ def exe_unitaire(rang, lang):
     sstitre_ppage += f"""<br/>
     {translate("ppage sstitre langue", lang)} {lang}"""
 
-    firstPage.ajouter_ppage(story, titre_ppage, sstitre_ppage)
+    firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage)
+
+    story.append(NextPageTemplate('grid'))
+    story.append(PageBreak())
 
     # Pages suivantes : cartes
     ajouter_cartes(story, rang, lang) 

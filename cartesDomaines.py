@@ -4,13 +4,12 @@ import markdown2
 
 from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Frame, PageTemplate, Table, TableStyle
-from reportlab.platypus import BaseDocTemplate, FrameBreak
+from reportlab.platypus import BaseDocTemplate, FrameBreak, PageBreak, NextPageTemplate
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import cm
 from reportlab.lib.utils import ImageReader
 from reportlab.lib import colors
 
-from footer import add_background
 import common
 from translator import translate
 import firstPage
@@ -79,7 +78,7 @@ def ajouter_cartes(story, rang, classe, lang):
 
                 # Infos secondaires
                 infoSecondaires = f"""
-                <b>{translate("domaine",common.langage)} - {translate("rappel",common.langage)}:</b> {carte['recall']} <b>Stress</b>
+                <b>{translate("domaine", lang)} - {translate("rappel", lang)}:</b> {carte['recall']} <b>Stress</b>
                 """
                 pg_sub = Paragraph(infoSecondaires, common.styles["CardSub"])
                 story.append(pg_sub)
@@ -93,15 +92,7 @@ def exe_unitaire(rang, classe, lang):
     # Création du document
     doc = BaseDocTemplate(f"pdf/abilities_{lang}_{rang}.pdf", pagesize=A4)
 
-    # Cadre des cartes (3x3 par page)
-    frames = common.cards_frames
-
-    # Définition du template pour la première page
-    template_ppage = firstPage.ppage_template
-    # Définition du template pour les cartes
-    template_cartes = PageTemplate(id="grid", frames=frames, onPage=add_background)
-
-    doc.addPageTemplates([template_ppage, template_cartes])
+    doc.addPageTemplates(common.creer_template(lang))
 
     # Construction du contenu
     story = []
@@ -112,7 +103,11 @@ def exe_unitaire(rang, classe, lang):
     {translate("ppage sstitre classe", lang)} {classe}<br/>
     {translate("ppage sstitre langue", lang)} {lang}
     """
-    firstPage.ajouter_ppage(story, titre_ppage, sstitre_ppage)
+    firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage)
+
+    # Pages suivantes : cartes
+    story.append(NextPageTemplate('grid'))
+    story.append(PageBreak())
 
     # Pages suivantes
     ajouter_cartes(story, rang, classe, lang)
