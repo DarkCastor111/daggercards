@@ -15,14 +15,14 @@ from translator import translate
 import firstPage
 
 def get_specialisation_a_imprimer(tier):
-    if tier == "1":
-        liste_specialisations = ["foundations"]
-    elif tier == "2":
-        liste_specialisations = ["foundations"]
-    elif tier == "3":
-        liste_specialisations = ["foundations", "specializations"]
-    else:
-        liste_specialisations = ["foundations", "specializations", "masteries"]
+    liste_specialisations = []
+    if "1" in tier or "2" in tier:
+        liste_specialisations.append("foundations")
+    if "3" in tier:
+        liste_specialisations.append("specializations")
+    if "4" in tier:
+        liste_specialisations.append("masteries")
+
 
     return liste_specialisations
 

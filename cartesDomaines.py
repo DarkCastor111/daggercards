@@ -16,14 +16,19 @@ import firstPage
 
 def get_niveaux_a_imprimer(tier):
     # Détermination des niveaux à imprimer en fonction du rang
-    if tier == "1":
-        liste_niveaux = ["1"]
-    elif tier == "2":
-        liste_niveaux = ["1","2","3","4"]
-    elif tier == "3":
-        liste_niveaux = ["1","2","3","4","5","6","7"]
-    else:
-        liste_niveaux = ["1","2","3","4","5","6","7","8","9","10"]
+    liste_niveaux = []
+    if "1" in tier:
+        liste_niveaux.append("1")
+        print(liste_niveaux)
+    if "2" in tier:
+        liste_niveaux.extend(["2","3","4"])
+        print(liste_niveaux)
+    if "3" in tier:
+        liste_niveaux.extend(["5","6","7"])
+        print(liste_niveaux)
+    if "4" in tier:
+        liste_niveaux.extend(["8","9","10"])
+        print(liste_niveaux)
     return liste_niveaux
 
 def get_domaines_a_imprimer(classe):
