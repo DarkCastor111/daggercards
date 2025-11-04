@@ -2,7 +2,7 @@
 venv_DaggerHeart/
 # Environnement
 .env
-# Fichiers .bak
+# Fichiers .bak .bat
 *.bat
 *.bak
 # Fichiers d'exécution
