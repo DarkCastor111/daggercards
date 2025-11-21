@@ -93,7 +93,7 @@ def ajouter_cartes(story, classe, lang):
 
         # Descriptions Capacités de classe
         for j, capa in enumerate(carte["class_feats"]):
-            capacite = markdown2.markdown(f"""<b>{capa["name"]}</b>&nbsp;:&nbsp;{capa["text"]}""")
+            capacite = markdown2.markdown(f"""<b>{capa["name"]}</b>&nbsp;:&nbsp;{capa["text"].replace("\n", "<br/>")}""")
             pg_capa = Paragraph(capacite, common.styles["CardText"])
             story.append(pg_capa)
 
@@ -112,9 +112,10 @@ def exe_unitaire(classe, lang):
 
     # Première page
     titre_ppage = translate("ppage titre classe", lang)
-    sstitre_ppage = f"""{translate("ppage sstitre classe", lang)} {classe}<br/>
-    {translate("ppage sstitre langue", lang)} {lang} {translate("ppage sstitre trad", lang)}
-    """
+    sstitre_ppage = f"""{translate("ppage sstitre langue", lang)} {lang} {translate("ppage sstitre trad", lang)}"""
+    if classe != "TOUTES" :
+        sstitre_ppage += f"""
+{translate("ppage sstitre classe", lang)} {classe}<br/>"""
 
     firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage, "")
 

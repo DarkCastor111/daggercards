@@ -100,7 +100,7 @@ def exe_unitaire(rang, lang):
         spe_traduite = f"{translate(spe, lang)} "
         sstitre_ppage += spe_traduite
     sstitre_ppage += f"""<br/>
-    {translate("ppage sstitre langue", lang)} {lang}"""
+    {translate("ppage sstitre langue", lang)} {lang} {translate("ppage sstitre trad", lang)}"""
 
     firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage, "")
 
