@@ -59,8 +59,15 @@ def ajouter_cartes(story, classe, lang):
         pg_desc = Paragraph(resume, common.styles["CardText"])
         story.append(pg_desc)
 
+        # Infos secondaires : Type de carte
+        infoSecondaires = f"""
+        {translate("classe", lang)}
+        """
+        pg_sub = Paragraph(infoSecondaires, common.styles["CardSub"])
+        story.append(pg_sub)
+
         # Informations additionnelles
-        spe = f"""Spécialisations :  {carte["subclass_1"]}, {carte["subclass_2"]}"""
+        spe = f"""{translate("classe spe", lang)} :  {carte["subclass_1"]}, {carte["subclass_2"]}"""
         pg_spe = Paragraph(spe, common.styles["CardSub"])
         story.append(pg_spe)
 
@@ -80,6 +87,14 @@ def ajouter_cartes(story, classe, lang):
         pg_hope = Paragraph(hope, common.styles["CardText"])
         story.append(pg_hope)
 
+        # Infos secondaires : Type de Carte
+        infoSecondaires = f"""
+        {translate("classe", lang)}
+        """
+        pg_sub = Paragraph(infoSecondaires, common.styles["CardSub"])
+        story.append(pg_sub)
+
+
         # Passe à la carte suivante
         story.append(FrameBreak())  
 
@@ -96,6 +111,13 @@ def ajouter_cartes(story, classe, lang):
             capacite = markdown2.markdown(f"""<b>{capa["name"]}</b>&nbsp;:&nbsp;{capa["text"].replace("\n", "<br/>")}""")
             pg_capa = Paragraph(capacite, common.styles["CardText"])
             story.append(pg_capa)
+
+        # Infos secondaires : Type de carte
+        infoSecondaires = f"""
+        {translate("classe", lang)}
+        """
+        pg_sub = Paragraph(infoSecondaires, common.styles["CardSub"])
+        story.append(pg_sub)
 
         # Passe à la carte suivante
         story.append(FrameBreak())  

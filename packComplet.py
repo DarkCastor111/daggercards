@@ -6,11 +6,11 @@ from reportlab.lib.pagesizes import A4
 import common
 import translator
 import firstPage
-import cartesOrigines, cartesSousClasses, cartesDomaines # cartesClasses 
+import cartesOrigines, cartesSousClasses, cartesDomaines, cartesClasses 
 
 print("Nom du script :", sys.argv[0])
 
-PARAM_LANG = "EN"
+PARAM_LANG = "FR"
 PARAM_RANG = "1"
 PARAM_CLASSE = "TOUS"
 
@@ -27,7 +27,7 @@ if len(sys.argv) > 3:
     print("Deuxième paramètre : PARAM_CLASSE = ", sys.argv[3])
     PARAM_CLASSE = sys.argv[3]
 
-fichier_pdf = f"pdf/packComplet_{PARAM_LANG}_{PARAM_RANG}.pdf"
+fichier_pdf = f"pdf/starterPack_{PARAM_LANG}_{PARAM_RANG}.pdf"
 
 # Création du document
 doc = BaseDocTemplate(fichier_pdf, pagesize=A4)
@@ -44,11 +44,11 @@ sstitre_ppage = f"""{translator.translate("ppage sstitre langue", PARAM_LANG)} {
 """
 
 sommaire_ppage = f"""
-- {translator.translate("ppage titre ascendance", PARAM_LANG).capitalize()} <br/>
 - {translator.translate("ppage titre origine", PARAM_LANG).capitalize()} <br/>
+- {translator.translate("ppage titre ascendance", PARAM_LANG).capitalize()} <br/>
 - {translator.translate("ppage titre classe", PARAM_LANG).capitalize()} <br/>
-- {translator.translate("ppage titre sous classe", PARAM_LANG).capitalize()} {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG}<br/>
-- {translator.translate("ppage titre domaine", PARAM_LANG).capitalize()} {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG}<br/>
+- {translator.translate("ppage titre sous classe", PARAM_LANG).capitalize()} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG}<br/>
+- {translator.translate("ppage titre domaine", PARAM_LANG).capitalize()} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG}<br/>
 """
 
 firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage, sommaire_ppage)
@@ -63,7 +63,7 @@ cartesOrigines.ajouter_cartes(story, "origine", PARAM_LANG)
 cartesOrigines.ajouter_cartes(story, "ascendance", PARAM_LANG)
 
 # Pages suivantes : cartes classes
-# cartesClasses.
+cartesClasses.ajouter_cartes(story, PARAM_CLASSE, PARAM_LANG)
 
 # Pages suivantes : cartes sous classes
 cartesSousClasses.ajouter_cartes(story, PARAM_RANG, PARAM_LANG)
