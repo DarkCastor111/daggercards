@@ -139,7 +139,7 @@ def exe_unitaire(classe, lang):
         sstitre_ppage += f"""
 {translate("ppage sstitre classe", lang)} {classe}<br/>"""
 
-    firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage, "")
+    firstPage.ajouter_ppage_legale(story, lang, titre_ppage, sstitre_ppage, "")
 
     # Pages suivantes : cartes
     story.append(NextPageTemplate('grid'))

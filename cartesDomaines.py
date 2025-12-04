@@ -108,7 +108,7 @@ def exe_unitaire(rang, classe, lang):
     {translate("ppage sstitre langue", lang)} {lang} {translate("ppage sstitre trad", lang)}
     """
 
-    firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage, "")
+    firstPage.ajouter_ppage_legale(story, lang, titre_ppage, sstitre_ppage, "")
 
     # Pages suivantes : cartes
     story.append(NextPageTemplate('grid'))

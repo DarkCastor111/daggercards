@@ -35,7 +35,7 @@ def getFPageParagraph(titre):
 
     return Paragraph(title_text, style_titre)
 
-def ajouter_ppage_legale(story, titre, sstitre, sommaire):
+def ajouter_ppage_legale(story, lang, titre, sstitre, sommaire):
 
     # Pré-Titre
     story.append(Spacer(1, 3*cm))
@@ -43,19 +43,22 @@ def ajouter_ppage_legale(story, titre, sstitre, sommaire):
 
     # Titre
     story.append(Paragraph(titre, style_titre))
-
     story.append(Spacer(1, 0.5*cm))
 
     # Sous Titre
     sous_titre=sstitre
     story.append(Paragraph(sous_titre, style_sstitre))
+    story.append(Spacer(1, 0.5*cm))
+
+    story.append(Paragraph(f"""{translate("ppage sstitre process", lang)}""", style_sstitre))
+    story.append(Paragraph("https://mydhblog.com/naissance-des-cartes/", style_sstitre))                    
     story.append(Spacer(1, 1.5*cm))
 
     # Logo du blog
     logo_mydhblog = Image("Images/LogoBlogAtlante_Trp.png", width=4*cm, height=4*cm)
     logo_mydhblog.hAlign = 'CENTER'
     story.append(logo_mydhblog)
-    story.append(Paragraph("myDHblog.com", style_sstitre))
+    story.append(Paragraph("https://myDHblog.com", style_sstitre))
     story.append(Spacer(1, 1.5*cm))
 
     # Contenu du pack
@@ -71,9 +74,9 @@ def ajouter_ppage_legale(story, titre, sstitre, sommaire):
     story.append(Spacer(1, 0.5*cm))
 
 
-    txt_copyright = f"""{translate("fp copyright", "EN")}"""
+    txt_copyright = f"""{translate("ppage copyright", lang)}"""
     story.append(Paragraph(txt_copyright, style_legal))
-    txt_logo = f"{translate("fp logo", "EN")}"
+    txt_logo = f"{translate("ppage logo", lang)}"
     story.append(Paragraph(txt_logo, style_legal))
 
     return story
