@@ -101,7 +101,8 @@ def exe_unitaire(rang, lang):
         sstitre_ppage += spe_traduite
     sstitre_ppage += f"""<br/>
     {translate("ppage sstitre langue", lang)} {lang} {translate("ppage sstitre trad", lang)}"""
-
+    sstitre_ppage += f"""<br/>
+        {translate("ppage sstitre version", lang)} {common.VERSION_SSC}"""
     firstPage.ajouter_ppage_legale(story, lang, titre_ppage, sstitre_ppage, "")
 
     story.append(NextPageTemplate('grid'))

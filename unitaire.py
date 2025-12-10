@@ -1,7 +1,7 @@
 import cartesOrigines, cartesSousClasses, cartesDomaines, cartesClasses, cartesFormeBestiale
 
 
-i18n="EN"
+i18n="FR"
 tier="4"
 
 """

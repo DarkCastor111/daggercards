@@ -51,6 +51,7 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
     "ppage sstitre sous classe": {"en": "Type(s):", "fr": "Type(s) :", "es": "todo"},
     "ppage sstitre classe": {"en": "Class:", "fr": "Classe :", "es": "todo"},
     "ppage sstitre process": {"en": "See the full creation process (in french) at:", "fr": "Le processus de création en détail :", "es": "todo"},
+    "ppage sstitre version": {"en": "Version:", "fr": "Version :", "es": "todo"},
     "ppage pack complet": {"en": "COMPLETE PACK", "fr": "PACK COMPLET", "es": "todo"},
     "classe espoir": {"en": "Hope Feature", "fr": "Capacité d'Espoir", "es": "todo"},
     "classe capacites": {"en": "Class Features", "fr": "Capacités de Classe", "es": "todo"},

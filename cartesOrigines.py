@@ -83,9 +83,11 @@ def ajouter_cartes(story, type_carte, lang):
 def exe_unitaire(type_carte, lang):
         
     fichier_pdf = f"pdf/communities_{lang}.pdf"
+    version = common.VERSION_ORI
 
     if type_carte == "ascendance":
         fichier_pdf = f"pdf/ancestries_{lang}.pdf"
+        version = common.VERSION_ASC
 
     # Création du document
     doc = BaseDocTemplate(fichier_pdf, pagesize=A4)
@@ -98,6 +100,9 @@ def exe_unitaire(type_carte, lang):
     # Première page
     titre_ppage = translate("ppage titre " + type_carte, lang)
     sstitre_ppage = f"""{translate("ppage sstitre langue", lang)} {lang}  {translate("ppage sstitre trad", lang)}"""
+
+    sstitre_ppage += f"""<br/>
+        {translate("ppage sstitre version", lang)} {version}"""
 
     firstPage.ajouter_ppage_legale(story, lang, titre_ppage, sstitre_ppage, "")
 

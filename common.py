@@ -10,11 +10,12 @@ import os
 from translator import translate
 
 
-
-#langage = "FR"
-#langage = "EN"
-#langage = "FR"
-#langage = "ES"
+VERSION_DOM = "DOM 2.0"
+VERSION_ORI = "ORI 2.0"
+VERSION_ASC = "ASC 2.0"
+VERSION_CLA = "CLA 2.0"
+VERSION_SSC = "SSC 2.0"
+VERSION_FMB = "FMB 1.0"
 
 # Directory containing JSON resources. Prefer environment variable `DIR_JSON`.
 # If not set, fall back to the project's original default path.
