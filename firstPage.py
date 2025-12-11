@@ -11,6 +11,7 @@ style_ptitre = ParagraphStyle(name="FPagePreTitle", fontSize=36, leading=38, ali
 style_titre = ParagraphStyle(name="FPageTitle", fontSize=26, leading=24, alignment=1, textColor=colors.black, fontName="Helvetica-Bold", spaceAfter=4)
 style_sstitre = ParagraphStyle(name="FPageSubTitle", fontSize=12, leading=14, alignment=1, textColor=colors.black, fontName="Helvetica", spaceAfter=4)
 style_sommaire = ParagraphStyle(name="FPageEntries", fontSize=12, leading=14, alignment=0, textColor=colors.black, fontName="Helvetica", spaceAfter=4)
+style_version = ParagraphStyle(name="FPageEntries", fontSize=10, leading=11, alignment=2, textColor=colors.black, fontName="Helvetica", spaceAfter=4)
 style_legal = ParagraphStyle(name="FPageLegal", fontSize=12, leading=13, alignment=4, textColor=colors.black, fontName="Helvetica", spaceAfter=4)
 
 
@@ -35,7 +36,11 @@ def getFPageParagraph(titre):
 
     return Paragraph(title_text, style_titre)
 
-def ajouter_ppage_legale(story, lang, titre, sstitre, sommaire):
+def ajouter_ppage_legale(story, lang, titre, sstitre, sommaire, version):
+
+    # Version
+    story.append(Paragraph(version, style_version))
+
 
     # Pré-Titre
     story.append(Spacer(1, 3*cm))

@@ -83,7 +83,7 @@ def ajouter_cartes(story, type_carte, lang):
 def exe_unitaire(type_carte, lang):
         
     fichier_pdf = f"pdf/communities_{lang}.pdf"
-    version = common.VERSION_ORI
+    version = common.VERSION_COM
 
     if type_carte == "ascendance":
         fichier_pdf = f"pdf/ancestries_{lang}.pdf"
@@ -101,10 +101,10 @@ def exe_unitaire(type_carte, lang):
     titre_ppage = translate("ppage titre " + type_carte, lang)
     sstitre_ppage = f"""{translate("ppage sstitre langue", lang)} {lang}  {translate("ppage sstitre trad", lang)}"""
 
-    sstitre_ppage += f"""<br/>
-        {translate("ppage sstitre version", lang)} {version}"""
+    version_ppage = f"""<br/>
+        {translate("ppage sstitre version", lang)} {common.VERSION_APP}/{version}"""
 
-    firstPage.ajouter_ppage_legale(story, lang, titre_ppage, sstitre_ppage, "")
+    firstPage.ajouter_ppage_legale(story, lang, titre_ppage, sstitre_ppage, "", version_ppage)
 
     # Pages suivantes : cartes
     story.append(NextPageTemplate('grid'))

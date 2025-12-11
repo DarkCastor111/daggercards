@@ -50,8 +50,10 @@ sommaire_ppage = f"""
 - {translator.translate("ppage titre sous classe", PARAM_LANG).capitalize()} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG}<br/>
 - {translator.translate("ppage titre domaine", PARAM_LANG).capitalize()} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG}<br/>
 """
+version_ppage = f"""<br/>
+    {translator.translate("ppage sstitre version", PARAM_LANG)} {common.VERSION_APP}/{common.VERSION_PCK}"""
 
-firstPage.ajouter_ppage_legale(story, titre_ppage, sstitre_ppage, sommaire_ppage)
+firstPage.ajouter_ppage_legale(story, PARAM_LANG, titre_ppage, sstitre_ppage, sommaire_ppage, version_ppage)
 
 # Pages suivantes : cartes origines
 
