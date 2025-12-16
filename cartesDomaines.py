@@ -107,8 +107,7 @@ def exe_unitaire(rang, classe, lang):
     sstitre_ppage = f"""{translate("ppage sstitre rang", lang)} {rang}<br/>
     {translate("ppage sstitre langue", lang)} {lang} {translate("ppage sstitre trad", lang)}
     """
-    version_ppage = f"""<br/>
-        {translate("ppage sstitre version", lang)} {common.VERSION_APP}/{common.VERSION_DOM}"""
+    version_ppage = f"""{translate("ppage sstitre version", lang)} {common.VERSION_DOM}"""
 
     firstPage.ajouter_ppage_legale(story, lang, titre_ppage, sstitre_ppage, "", version_ppage)
 

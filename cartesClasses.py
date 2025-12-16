@@ -138,8 +138,7 @@ def exe_unitaire(classe, lang):
     if classe != "TOUTES" :
         sstitre_ppage += f"""{translate("ppage sstitre classe", lang)} {classe}<br/>"""
 
-    version_ppage = f"""<br/>
-        {translate("ppage sstitre version", lang)} {common.VERSION_APP}/{common.VERSION_CLA}"""
+    version_ppage = f"""{translate("ppage sstitre version", lang)} {common.VERSION_CLA}"""
 
     firstPage.ajouter_ppage_legale(story, lang, titre_ppage, sstitre_ppage, "", version_ppage)
 

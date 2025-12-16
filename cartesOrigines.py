@@ -101,8 +101,7 @@ def exe_unitaire(type_carte, lang):
     titre_ppage = translate("ppage titre " + type_carte, lang)
     sstitre_ppage = f"""{translate("ppage sstitre langue", lang)} {lang}  {translate("ppage sstitre trad", lang)}"""
 
-    version_ppage = f"""<br/>
-        {translate("ppage sstitre version", lang)} {common.VERSION_APP}/{version}"""
+    version_ppage = f"""{translate("ppage sstitre version", lang)} {version}"""
 
     firstPage.ajouter_ppage_legale(story, lang, titre_ppage, sstitre_ppage, "", version_ppage)
 

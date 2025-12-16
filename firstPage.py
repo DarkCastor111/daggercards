@@ -3,7 +3,7 @@ from reportlab.platypus import Frame, PageTemplate, Paragraph, PageBreak, NextPa
 from reportlab.lib import colors
 from reportlab.lib.units import cm
 
-from common import page_height, page_width
+from common import page_height, page_width, VERSION_APP
 from translator import translate
 
 
@@ -11,7 +11,8 @@ style_ptitre = ParagraphStyle(name="FPagePreTitle", fontSize=36, leading=38, ali
 style_titre = ParagraphStyle(name="FPageTitle", fontSize=26, leading=24, alignment=1, textColor=colors.black, fontName="Helvetica-Bold", spaceAfter=4)
 style_sstitre = ParagraphStyle(name="FPageSubTitle", fontSize=12, leading=14, alignment=1, textColor=colors.black, fontName="Helvetica", spaceAfter=4)
 style_sommaire = ParagraphStyle(name="FPageEntries", fontSize=12, leading=14, alignment=0, textColor=colors.black, fontName="Helvetica", spaceAfter=4)
-style_version = ParagraphStyle(name="FPageEntries", fontSize=10, leading=11, alignment=2, textColor=colors.black, fontName="Helvetica", spaceAfter=4)
+style_version = ParagraphStyle(name="FPageVersion", fontSize=10, leading=11, alignment=2, textColor=colors.black, fontName="Helvetica", spaceAfter=2)
+style_subversion = ParagraphStyle(name="FPageSubVersion", fontSize=10, leading=11, alignment=2, textColor=colors.white, fontName="Helvetica", spaceAfter=2)
 style_legal = ParagraphStyle(name="FPageLegal", fontSize=12, leading=13, alignment=4, textColor=colors.black, fontName="Helvetica", spaceAfter=4)
 
 
@@ -38,8 +39,9 @@ def getFPageParagraph(titre):
 
 def ajouter_ppage_legale(story, lang, titre, sstitre, sommaire, version):
 
-    # Version
+    # Versions
     story.append(Paragraph(version, style_version))
+    story.append(Paragraph(VERSION_APP, style_subversion))
 
 
     # Pré-Titre

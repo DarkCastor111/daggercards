@@ -47,7 +47,7 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
     "ppage sstitre domaines": {"en": "Domain(s):", "fr": "Domaine(s) :", "es": "todo"},
     "ppage sstitre rang": {"en": "Tier:", "fr": "Rang :", "es": "todo"},
     "ppage sstitre langue": {"en": "Language:", "fr": "Langue :", "es": "todo"},
-    "ppage sstitre trad": {"en": "(SRD 1.0)", "fr": "(Traduction 'IA powered' non officielle)", "es": "todo"},
+    "ppage sstitre trad": {"en": "(SRD 1.0)", "fr": "(Traduction 'AI powered' non officielle)", "es": "todo"},
     "ppage sstitre sous classe": {"en": "Type(s):", "fr": "Type(s) :", "es": "todo"},
     "ppage sstitre classe": {"en": "Class:", "fr": "Classe :", "es": "todo"},
     "ppage sstitre process": {"en": "See the full creation process (in french) at:", "fr": "Le processus de création en détail :", "es": "todo"},
