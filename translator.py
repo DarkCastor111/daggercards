@@ -43,7 +43,7 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
     "ppage titre domaine": {"en": "DOMAIN CARDS", "fr": "CARTES DE DOMAINES", "es": "todo"},
     "ppage titre sous classe": {"en": "SUBCLASS CARDS", "fr": "CARTES DE SOUS-CLASSES", "es": "todo"},
     "ppage titre classe": {"en": "CLASS CARDS", "fr": "CARTES DE CLASSES", "es": "todo"},
-    "ppage titre beastform": {"en": "DRUID BEASTFORM CARDS", "fr": "CARTES DE FORME ANIMALE DU DRUIDE", "es": "todo"},
+    "ppage titre beastform": {"en": "DRUID BEASTFORM CARDS", "fr": "CARTES DE FORME BESTIALE DU DRUIDE", "es": "todo"},
     "ppage sstitre domaines": {"en": "Domain(s):", "fr": "Domaine(s) :", "es": "todo"},
     "ppage sstitre rang": {"en": "Tier:", "fr": "Rang :", "es": "todo"},
     "ppage sstitre langue": {"en": "Language:", "fr": "Langue :", "es": "todo"},

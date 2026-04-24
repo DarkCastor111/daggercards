@@ -19,16 +19,16 @@ def get_niveaux_a_imprimer(tier):
     liste_niveaux = []
     if "1" in tier:
         liste_niveaux.append("1")
-        print(liste_niveaux)
+        print("Niveaux : ", liste_niveaux)
     if "2" in tier:
         liste_niveaux.extend(["2","3","4"])
-        print(liste_niveaux)
+        print("Niveaux : ", liste_niveaux)
     if "3" in tier:
         liste_niveaux.extend(["5","6","7"])
-        print(liste_niveaux)
+        print("Niveaux : ", liste_niveaux)
     if "4" in tier:
         liste_niveaux.extend(["8","9","10"])
-        print(liste_niveaux)
+        print("Niveaux : ", liste_niveaux)
     return liste_niveaux
 
 def get_domaines_a_imprimer(classe):

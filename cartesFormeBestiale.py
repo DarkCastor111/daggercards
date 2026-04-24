@@ -147,7 +147,7 @@ def exe_unitaire(rang, lang):
 
     # Première page
     titre_ppage = translate("ppage titre beastform" ,lang)
-    sstitre_ppage = f"""{translate("ppage sstitre rang" ,lang)} {rang}"""
+    sstitre_ppage = f"""{translate("ppage sstitre rang" ,lang)} 1-{rang}"""
     sstitre_ppage += f"""<br/>
     {translate("ppage sstitre langue", lang)} {lang} {translate("ppage sstitre trad", lang)}"""
 
