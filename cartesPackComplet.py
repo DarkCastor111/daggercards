@@ -8,11 +8,15 @@ import translator
 import firstPage
 import cartesOrigines, cartesSousClasses, cartesDomaines, cartesClasses 
 
+
 print("Nom du script :", sys.argv[0])
 
 PARAM_LANG = "FR"
-PARAM_RANG = "1"
+PARAM_RANG = "Complet"
+PARAM_RANG_STR = "Complet"
 PARAM_CLASSE = "TOUS"
+PARAM_CLASSE_STR = "TOUS"
+PARAM_CLASSE_STR_COURT = "TOUS"
 
 
 if len(sys.argv) > 1:
@@ -23,11 +27,25 @@ if len(sys.argv) > 1:
 if len(sys.argv) > 2:
     print("Deuxième paramètre : PARAM_RANG = ", sys.argv[2])
     PARAM_RANG = sys.argv[2]
+    if PARAM_RANG == "Tous":
+        PARAM_RANG_STR = "1-4"
+    else:
+        PARAM_RANG_STR = PARAM_RANG
 if len(sys.argv) > 3:
     print("Deuxième paramètre : PARAM_CLASSE = ", sys.argv[3])
-    PARAM_CLASSE = sys.argv[3]
+    # PARAM_CLASSE, Nom des classes dans les json, pour passage de paramètre
+    PARAM_CLASSE = translator.translate("classe " + sys.argv[3], PARAM_LANG)
 
-fichier_pdf = f"pdf/starterPack_{PARAM_LANG}_{PARAM_RANG}.pdf"
+    # PARAM_CLASSE_STR et PARAM_CLASSE_STR_COURT, pour affichage
+    if sys.argv[3] == "Tous":
+        PARAM_CLASSE_STR = translator.translate("ppage pack complet", PARAM_LANG)
+        PARAM_CLASSE_STR_COURT = translator.translate("ppage pack complet", PARAM_LANG)
+    else:
+        PARAM_CLASSE_STR = translator.translate("ppage pack " + sys.argv[3], PARAM_LANG)
+        PARAM_CLASSE_STR_COURT = sys.argv[3].upper()
+
+
+fichier_pdf = f"pdf/Pack_{PARAM_CLASSE_STR_COURT}_{PARAM_RANG_STR}_{PARAM_LANG}.pdf"
 
 # Création du document
 doc = BaseDocTemplate(fichier_pdf, pagesize=A4)
@@ -38,20 +56,22 @@ doc.addPageTemplates(common.creer_template(PARAM_LANG))
 story = []
 
 # Première page
-titre_ppage = translator.translate("ppage pack complet", PARAM_LANG)
+titre_ppage = f"""{PARAM_CLASSE_STR.upper()} {translator.translate("ppage pack", PARAM_LANG)}"""
 sstitre_ppage = f"""{translator.translate("ppage sstitre langue", PARAM_LANG)} {PARAM_LANG} {translator.translate("ppage sstitre trad", PARAM_LANG)}<br/> 
-{translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG}
+{translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG_STR}
 """
 
+liste_domaines = common.get_domaines_a_imprimer(PARAM_CLASSE)
+
 sommaire_ppage = f"""
-- {translator.translate("ppage titre origine", PARAM_LANG).capitalize()} <br/>
-- {translator.translate("ppage titre ascendance", PARAM_LANG).capitalize()} <br/>
-- {translator.translate("ppage titre classe", PARAM_LANG).capitalize()} <br/>
-- {translator.translate("ppage titre sous classe", PARAM_LANG).capitalize()} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG}<br/>
-- {translator.translate("ppage titre domaine", PARAM_LANG).capitalize()} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG}<br/>
+- 9 {translator.translate("ppage titre origine", PARAM_LANG).capitalize()} <br/>
+- 18 {translator.translate("ppage titre ascendance", PARAM_LANG).capitalize()} <br/>
+- 3 {translator.translate("ppage titre classe", PARAM_LANG).capitalize()} <br/>
+- 6 {translator.translate("ppage titre sous classe", PARAM_LANG).capitalize()} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG_STR}<br/>
+- 42 {translator.translate("ppage titre domaine", PARAM_LANG).capitalize()} {liste_domaines} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG_STR}<br/>
 """
 version_ppage = f"""<br/>
-    {translator.translate("ppage sstitre version", PARAM_LANG)} {common.VERSION_APP}/{common.VERSION_PCK}"""
+    {translator.translate("ppage sstitre version", PARAM_LANG)} {common.VERSION_PCK}"""
 
 firstPage.ajouter_ppage_legale(story, PARAM_LANG, titre_ppage, sstitre_ppage, sommaire_ppage, version_ppage)
 
@@ -68,7 +88,7 @@ cartesOrigines.ajouter_cartes(story, "ascendance", PARAM_LANG)
 cartesClasses.ajouter_cartes(story, PARAM_CLASSE, PARAM_LANG)
 
 # Pages suivantes : cartes sous classes
-cartesSousClasses.ajouter_cartes(story, PARAM_RANG, PARAM_LANG)
+cartesSousClasses.ajouter_cartes(story, PARAM_RANG, PARAM_CLASSE, PARAM_LANG)
 
 # Pages suivantes : cartes domaines
 cartesDomaines.ajouter_cartes(story, PARAM_RANG, PARAM_CLASSE, PARAM_LANG)

@@ -45,7 +45,7 @@ def ajouter_ppage_legale(story, lang, titre, sstitre, sommaire, version):
 
 
     # Pré-Titre
-    story.append(Spacer(1, 3*cm))
+    story.append(Spacer(1, 2*cm))
     story.append(Paragraph("DAGGERHEART", style_ptitre))
 
     # Titre
@@ -59,13 +59,13 @@ def ajouter_ppage_legale(story, lang, titre, sstitre, sommaire, version):
 
     story.append(Paragraph(f"""{translate("ppage sstitre process", lang)}""", style_sstitre))
     story.append(Paragraph("https://mydhblog.com/naissance-des-cartes/", style_sstitre))                    
-    story.append(Spacer(1, 1.5*cm))
+    story.append(Spacer(1, 1*cm))
 
     # Logo du blog
-    logo_mydhblog = Image("Images/LogoBlogAtlante_Trp.png", width=4*cm, height=4*cm)
+    logo_mydhblog = Image("Images/LogoBlogAtlante_Trp.png", width=3*cm, height=3*cm)
     logo_mydhblog.hAlign = 'CENTER'
     story.append(logo_mydhblog)
-    story.append(Paragraph("https://myDHblog.com", style_sstitre))
+    story.append(Paragraph(f"""{translate("ppage sstitre materiel blog", lang)} >> https://myDHblog.com << <br/> {translate("ppage sstitre materiel patreon", lang)} >> https://www.patreon.com/cw/DarkCastor <<""", style_sstitre))
     story.append(Spacer(1, 1.5*cm))
 
     # Contenu du pack

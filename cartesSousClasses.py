@@ -14,74 +14,91 @@ import common
 from translator import translate
 import firstPage
 
+def get_classes_a_imprimer(classe, lang):
+    if classe == "Tous":
+        if lang == "EN":
+            return ["Bard","Druid","Guardian","Ranger","Rogue","Seraph","Sorcerer","Warrior","Wizard"]
+        else:
+            return ["Barde","Druide","Champion","Rôdeur","Roublard","Paladin","Ensorceleur","Guerrier","Arcaniste"]
+    else:
+        return [classe]
+
 def get_specialisation_a_imprimer(tier):
     liste_specialisations = []
-    if "1" in tier or "2" in tier:
+    if "1" in tier or "2" in tier or "Tous" in tier :
         liste_specialisations.append("foundations")
-    if "3" in tier:
+    if "3" in tier or "Tous" in tier:
         liste_specialisations.append("specializations")
-    if "4" in tier:
+    if "4" in tier or "Tous" in tier:
         liste_specialisations.append("masteries")
 
-
+    print("SOUS-CLASSE : Spécialisations :",  liste_specialisations)
     return liste_specialisations
 
-def ajouter_cartes(story, rang, lang):
+def ajouter_cartes(story, rang, classe, lang):
     
-    specialisations_a_imprimer = get_specialisation_a_imprimer(rang)    
+    specialisations_a_imprimer = get_specialisation_a_imprimer(rang)
+    classes_a_imprimer = get_classes_a_imprimer(classe, lang)
     
     # Charger le JSON
     with open(common.DIR_JSON + f"{lang}/subclasses_{lang}.json", "r", encoding="utf-8") as f:
         cartes = json.load(f)
 
-    for i, carte in enumerate(cartes):
+    for sscl in classes_a_imprimer:
+        for i, carte in enumerate(cartes):
 
-        for carte_type in specialisations_a_imprimer:
+            for carte_type in specialisations_a_imprimer:
 
-            # Nom Sous Classe
-            titre = f"""{carte["name"].upper()}"""
+                # Nom Sous Classe
+                titre = f"""{carte["name"].upper()}"""
 
-            pg_titre = [[Paragraph(titre, common.styles["CardTitle"])]]
-            tbl_domain = Table(pg_titre)
-            tbl_domain.setStyle(TableStyle([('BACKGROUND',(0,0),(0,0),['HORIZONTAL', common.domain_bg_colors.get(carte["domain_1"], colors.white),common.domain_bg_colors.get(carte["domain_2"], colors.white)]),
-                                            ]))
+                # Nom Classe
+                nom_classe = f"""{carte["class"].upper()}""" 
 
-            story.append(tbl_domain)
+                if f"""{sscl.upper()}""" == nom_classe:
+                    print("SOUS-CLASSE : classe :", sscl, "classe :", nom_classe)
 
-            # Type de Carte
-            crt_tp=f"{translate(carte_type, lang)}"
-            pg_type = Paragraph(crt_tp, common.styles["CardSubTitle"])
-            story.append(pg_type)
+                    pg_titre = [[Paragraph(titre, common.styles["CardTitle"])]]
+                    tbl_domain = Table(pg_titre)
+                    tbl_domain.setStyle(TableStyle([('BACKGROUND',(0,0),(0,0),['HORIZONTAL', common.domain_bg_colors.get(carte["domain_1"], colors.white),common.domain_bg_colors.get(carte["domain_2"], colors.white)]),
+                                                    ]))
 
-            # Description, seulement sur la première carte
-            if carte_type == "foundations":
-                crt_desc=f"""{carte["description"]}"""
-                pg_desc = Paragraph(crt_desc, common.styles["CardText"])
-                story.append(pg_desc)
-            
-            # Capacités du type de carte
-            for j, capa in enumerate(carte[carte_type]):
-                capacite = f"""<b>{capa["name"]}</b>&nbsp;:&nbsp;{markdown2.markdown(capa["text"].replace("\n", "<br/>"))}"""
-                pg_capa = Paragraph(capacite, common.styles["CardText"])
-                story.append(pg_capa)
+                    story.append(tbl_domain)
 
-            # Informations additionnelles
-            spe = f"""{translate('sous classe de', lang)} {carte["class"].upper()}"""
-            pg_spe = Paragraph(spe, common.styles["CardSub"])
-            story.append(pg_spe)
+                    # Type de Carte
+                    crt_tp=f"{translate(carte_type, lang)}"
+                    pg_type = Paragraph(crt_tp, common.styles["CardSubTitle"])
+                    story.append(pg_type)
 
-            if carte_type == "foundations" and carte.get("spellcast_trait") :
-                inc = f"""{translate('trait incantation', lang)} {carte["spellcast_trait"]}"""
-                pg_inc = Paragraph(inc, common.styles["CardSub"])
-                story.append(pg_inc)
+                    # Description, seulement sur la première carte
+                    if carte_type == "foundations":
+                        crt_desc=f"""{carte["description"]}"""
+                        pg_desc = Paragraph(crt_desc, common.styles["CardText"])
+                        story.append(pg_desc)
+                    
+                    # Capacités du type de carte
+                    for j, capa in enumerate(carte[carte_type]):
+                        capacite = f"""<b>{capa["name"]}</b>&nbsp;:&nbsp;{markdown2.markdown(capa["text"].replace("\n", "<br/>"))}"""
+                        pg_capa = Paragraph(capacite, common.styles["CardText"])
+                        story.append(pg_capa)
 
-            # Passe à la carte suivante
-            story.append(FrameBreak())  
+                    # Informations additionnelles
+                    spe = f"""{translate('sous classe de', lang)} {carte["class"].upper()}"""
+                    pg_spe = Paragraph(spe, common.styles["CardSub"])
+                    story.append(pg_spe)
+
+                    if carte_type == "foundations" and carte.get("spellcast_trait") :
+                        inc = f"""{translate('trait incantation', lang)} {carte["spellcast_trait"]}"""
+                        pg_inc = Paragraph(inc, common.styles["CardSub"])
+                        story.append(pg_inc)
+
+                    # Passe à la carte suivante
+                    story.append(FrameBreak())
 
 
 
 
-def exe_unitaire(rang, lang):
+def exe_unitaire(rang, classe, lang):
 
     liste_specialisations = get_specialisation_a_imprimer(rang)
 
@@ -108,7 +125,7 @@ def exe_unitaire(rang, lang):
     story.append(PageBreak())
 
     # Pages suivantes : cartes
-    ajouter_cartes(story, rang, lang) 
+    ajouter_cartes(story, rang, classe, lang) 
 
     # Génération du PDF
     doc.build(story)

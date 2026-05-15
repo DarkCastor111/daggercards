@@ -17,27 +17,16 @@ import firstPage
 def get_niveaux_a_imprimer(tier):
     # Détermination des niveaux à imprimer en fonction du rang
     liste_niveaux = []
-    if "1" in tier:
+    if "1" in tier or "Tous" in tier:
         liste_niveaux.append("1")
-        print("Niveaux : ", liste_niveaux)
-    if "2" in tier:
+    if "2" in tier or "Tous" in tier:
         liste_niveaux.extend(["2","3","4"])
-        print("Niveaux : ", liste_niveaux)
-    if "3" in tier:
+    if "3" in tier or "Tous" in tier:
         liste_niveaux.extend(["5","6","7"])
-        print("Niveaux : ", liste_niveaux)
-    if "4" in tier:
+    if "4" in tier or "Tous" in tier:
         liste_niveaux.extend(["8","9","10"])
-        print("Niveaux : ", liste_niveaux)
+    print("DOMAINES : Niveaux : ", liste_niveaux)
     return liste_niveaux
-
-def get_domaines_a_imprimer(classe):
-    if classe == "Warior":
-        liste_domaines=["Arcana","Blade"]
-    else:
-        liste_domaines=["Arcana","Blade","Bone","Codex","Grace","Midnight","Sage","Splendor","Valor"]
-    return liste_domaines
-
 
 def ajouter_cartes(story, rang, classe, lang):
     # Charger le JSON
@@ -48,7 +37,7 @@ def ajouter_cartes(story, rang, classe, lang):
     niveaux_a_imprimer = get_niveaux_a_imprimer(rang)
 
     # Détermination des domaines à imprimer (cas pack classes)
-    domaines_a_imprimer = get_domaines_a_imprimer(classe)
+    domaines_a_imprimer = common.get_domaines_a_imprimer(classe)
 
 
     # Ajout des cartes dans la story
@@ -94,8 +83,14 @@ def ajouter_cartes(story, rang, classe, lang):
 
 def exe_unitaire(rang, classe, lang):
 
+    if rang == "Tous":
+        rang_txt = "1-4"
+    else:
+        rang_txt = rang
+
+
     # Création du document
-    doc = BaseDocTemplate(f"pdf/abilities_{lang}_{rang}.pdf", pagesize=A4)
+    doc = BaseDocTemplate(f"pdf/abilities_{lang}_{rang_txt}.pdf", pagesize=A4)
 
     doc.addPageTemplates(common.creer_template(lang))
 
@@ -104,7 +99,7 @@ def exe_unitaire(rang, classe, lang):
 
     # Première page
     titre_ppage = translate("ppage titre domaine", lang)
-    sstitre_ppage = f"""{translate("ppage sstitre rang", lang)} {rang}<br/>
+    sstitre_ppage = f"""{translate("ppage sstitre rang", lang)} {rang_txt}<br/>
     {translate("ppage sstitre langue", lang)} {lang} {translate("ppage sstitre trad", lang)}
     """
     version_ppage = f"""{translate("ppage sstitre version", lang)} {common.VERSION_DOM}"""

@@ -9,7 +9,7 @@ import os
 
 from translator import translate
 
-VERSION_APP = "APP_04"
+VERSION_APP = "APP_05"
 
 VERSION_DOM = "DOM_05"
 VERSION_COM = "COM_02"
@@ -18,7 +18,7 @@ VERSION_CLA = "CLA_02"
 VERSION_SCL = "SCL_02"
 VERSION_FMB = "BFM_02"
 
-VERSION_PCK = "PCK_02"
+VERSION_PCK = "PCK_05"
 
 # Directory containing JSON resources. Prefer environment variable `DIR_JSON`.
 # If not set, fall back to the project's original default path.
@@ -64,6 +64,30 @@ domain_txt_colors = {
     "Splendor": colors.snow,
     "Valor": colors.snow,
 }
+
+def get_domaines_a_imprimer(classe):
+    if classe in ["Bard", "Barde"]:
+        liste_domaines=["Codex","Grace"]
+    elif classe in ["Druid", "Druide"]:
+        liste_domaines=["Arcana","Sage"]
+    elif classe in ["Guardian", "Champion"]:
+        liste_domaines=["Blade","Valor"]
+    elif classe in ["Ranger","Rodeur"]:
+        liste_domaines=["Bone","Sage"]
+    elif classe in ["Rogue","Roublard"]:
+        liste_domaines=["Grace","Midnight"]
+    elif classe in ["Seraph","Paladin"]:
+        liste_domaines=["Splendor","Valor"]
+    elif classe in ["Sorcerer","Ensorceleur"]:
+        liste_domaines=["Arcana","Midnight"]
+    elif classe in ["Warrior","Guerrier"]:
+        liste_domaines=["Blade","Bone"]
+    elif classe in ["Wizard","Arcaniste"]:
+        liste_domaines=["Codex","Splendor"]
+    else:
+        liste_domaines=["Arcana","Blade","Bone","Codex","Grace","Midnight","Sage","Splendor","Valor"]
+    print("DOMAINE : Classe :", classe, "Domaines :", liste_domaines)
+    return liste_domaines
 
 # Styles
 #############################

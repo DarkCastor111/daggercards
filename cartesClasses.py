@@ -26,101 +26,111 @@ styles.add(ParagraphStyle(name="CardType", fontSize=10, leading=11, alignment=1,
 """
 
 
-def get_classes_a_imprimer(classe):
-    return "TOUTES"
+def get_classes_a_imprimer(classe, lang):
+    if classe == "Tous":
+        if lang == "EN":
+            return ["Bard","Druid","Guardian","Ranger","Rogue","Seraph","Sorcerer","Warrior","Wizard"]
+        else:
+            return ["Barde","Druide","Champion","Rôdeur","Roublard","Paladin","Ensorceleur","Guerrier","Arcaniste"]
+    else:
+        return [classe]
 
 def ajouter_cartes(story, classe, lang):
     # Détermination des domaines à imprimer (cas pack classes)
-    classes_a_imprimer = get_classes_a_imprimer(classe)
+    classes_a_imprimer = get_classes_a_imprimer(classe, lang)
 
     # Charger le JSON
     with open(common.DIR_JSON + f"{lang}/classes_{lang}.json", "r", encoding="utf-8") as f:
         cartes = json.load(f)
 
     # Ajout des cartes dans la story
-    for i, carte in enumerate(cartes):
+    for cl in classes_a_imprimer:
+        for i, carte in enumerate(cartes):
 
-        # Nom Classe
-        titre = f"""{carte["name"].upper()}"""
+            # Nom Classe
+            titre = f"""{carte["name"].upper()}"""
+            print("CLASSE : classe :", cl, "titre :", titre)
 
-        pg_titre = [[Paragraph(titre, common.styles["CardTitle"])]]
-        tbl_class = Table(pg_titre)
-        tbl_class.setStyle(TableStyle([('BACKGROUND',(0,0),(0,0),['HORIZONTAL', common.domain_bg_colors.get(carte["domain_1"], colors.white),common.domain_bg_colors.get(carte["domain_2"], colors.white)]),
-                                            ]))
-        story.append(tbl_class)
+            if f"""{cl.upper()}""" == titre:
+                print("CLASSE : => On imprime les cartes de", titre)
+                pg_titre = [[Paragraph(titre, common.styles["CardTitle"])]]
+                tbl_class = Table(pg_titre)
+                tbl_class.setStyle(TableStyle([('BACKGROUND',(0,0),(0,0),['HORIZONTAL', common.domain_bg_colors.get(carte["domain_1"], colors.white),common.domain_bg_colors.get(carte["domain_2"], colors.white)]),
+                                                    ]))
+                story.append(tbl_class)
 
-        # Domaines
-        crt_tp=f"{carte["domain_1"]} - {carte["domain_2"]}"
-        pg_type = Paragraph(crt_tp, common.styles["CardSubTitle"])
-        story.append(pg_type)
-        
-        # Description
-        resume = common.premieres_phrases(carte["description"], 2)
-        pg_desc = Paragraph(resume, common.styles["CardText"])
-        story.append(pg_desc)
+                # Domaines
+                crt_tp=f"{carte["domain_1"]} - {carte["domain_2"]}"
+                pg_type = Paragraph(crt_tp, common.styles["CardSubTitle"])
+                story.append(pg_type)
+                
+                # Description
+                resume = common.premieres_phrases(carte["description"], 2)
+                pg_desc = Paragraph(resume, common.styles["CardText"])
+                story.append(pg_desc)
 
-        # Infos secondaires : Type de carte
-        infoSecondaires = f"""
-        {translate("classe", lang)}
-        """
-        pg_sub = Paragraph(infoSecondaires, common.styles["CardSub"])
-        story.append(pg_sub)
+                # Infos secondaires : Type de carte
+                infoSecondaires = f"""
+                {translate("classe", lang)}
+                """
+                pg_sub = Paragraph(infoSecondaires, common.styles["CardSub"])
+                story.append(pg_sub)
 
-        # Informations additionnelles
-        spe = f"""{translate("classe spe", lang)} :  {carte["subclass_1"]}, {carte["subclass_2"]}"""
-        pg_spe = Paragraph(spe, common.styles["CardSub"])
-        story.append(pg_spe)
+                # Informations additionnelles
+                spe = f"""{translate("classe spe", lang)} :  {carte["subclass_1"]}, {carte["subclass_2"]}"""
+                pg_spe = Paragraph(spe, common.styles["CardSub"])
+                story.append(pg_spe)
 
-        # Passe à la carte suivante
-        story.append(FrameBreak())  
+                # Passe à la carte suivante
+                story.append(FrameBreak())  
 
-        # Classe
-        story.append(tbl_class)
+                # Classe
+                story.append(tbl_class)
 
-        # Sous-Type de carte : Capacité d'Espoir
-        crt_tp=f"""{translate("classe espoir", lang)}"""
-        pg_type = Paragraph(crt_tp, common.styles["CardSubTitle"])
-        story.append(pg_type)
+                # Sous-Type de carte : Capacité d'Espoir
+                crt_tp=f"""{translate("classe espoir", lang)}"""
+                pg_type = Paragraph(crt_tp, common.styles["CardSubTitle"])
+                story.append(pg_type)
 
-        # Description Capacité d'Espoir
-        hope = markdown2.markdown(f"""<b>{carte["hope_feat_name"]}</b>&nbsp;:&nbsp;{carte["hope_feat_text"]}""")
-        pg_hope = Paragraph(hope, common.styles["CardText"])
-        story.append(pg_hope)
+                # Description Capacité d'Espoir
+                hope = markdown2.markdown(f"""<b>{carte["hope_feat_name"]}</b>&nbsp;:&nbsp;{carte["hope_feat_text"]}""")
+                pg_hope = Paragraph(hope, common.styles["CardText"])
+                story.append(pg_hope)
 
-        # Infos secondaires : Type de Carte
-        infoSecondaires = f"""
-        {translate("classe", lang)}
-        """
-        pg_sub = Paragraph(infoSecondaires, common.styles["CardSub"])
-        story.append(pg_sub)
+                # Infos secondaires : Type de Carte
+                infoSecondaires = f"""
+                {translate("classe", lang)}
+                """
+                pg_sub = Paragraph(infoSecondaires, common.styles["CardSub"])
+                story.append(pg_sub)
 
 
-        # Passe à la carte suivante
-        story.append(FrameBreak())  
+                # Passe à la carte suivante
+                story.append(FrameBreak())  
 
-        # Classe
-        story.append(tbl_class)
+                # Classe
+                story.append(tbl_class)
 
-        # Sous-Type de carte : Capacités de classe
-        crt_tp=f"""{translate("classe capacites", lang)}"""
-        pg_type = Paragraph(crt_tp, common.styles["CardSubTitle"])
-        story.append(pg_type)
+                # Sous-Type de carte : Capacités de classe
+                crt_tp=f"""{translate("classe capacites", lang)}"""
+                pg_type = Paragraph(crt_tp, common.styles["CardSubTitle"])
+                story.append(pg_type)
 
-        # Descriptions Capacités de classe
-        for j, capa in enumerate(carte["class_feats"]):
-            capacite = markdown2.markdown(f"""<b>{capa["name"]}</b>&nbsp;:&nbsp;{capa["text"].replace("\n", "<br/>")}""")
-            pg_capa = Paragraph(capacite, common.styles["CardText"])
-            story.append(pg_capa)
+                # Descriptions Capacités de classe
+                for j, capa in enumerate(carte["class_feats"]):
+                    capacite = markdown2.markdown(f"""<b>{capa["name"]}</b>&nbsp;:&nbsp;{capa["text"].replace("\n", "<br/>")}""")
+                    pg_capa = Paragraph(capacite, common.styles["CardText"])
+                    story.append(pg_capa)
 
-        # Infos secondaires : Type de carte
-        infoSecondaires = f"""
-        {translate("classe", lang)}
-        """
-        pg_sub = Paragraph(infoSecondaires, common.styles["CardSub"])
-        story.append(pg_sub)
+                # Infos secondaires : Type de carte
+                infoSecondaires = f"""
+                {translate("classe", lang)}
+                """
+                pg_sub = Paragraph(infoSecondaires, common.styles["CardSub"])
+                story.append(pg_sub)
 
-        # Passe à la carte suivante
-        story.append(FrameBreak())  
+                # Passe à la carte suivante
+                story.append(FrameBreak())  
 
 def exe_unitaire(classe, lang):
 
@@ -135,8 +145,8 @@ def exe_unitaire(classe, lang):
     # Première page
     titre_ppage = translate("ppage titre classe", lang)
     sstitre_ppage = f"""{translate("ppage sstitre langue", lang)} {lang} {translate("ppage sstitre trad", lang)}"""
-    if classe != "TOUTES" :
-        sstitre_ppage += f"""{translate("ppage sstitre classe", lang)} {classe}<br/>"""
+    if classe != "Tous" :
+        sstitre_ppage += f"""<br/>{translate("ppage sstitre classe", lang)} {classe}"""
 
     version_ppage = f"""{translate("ppage sstitre version", lang)} {common.VERSION_CLA}"""
 

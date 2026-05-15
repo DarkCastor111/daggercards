@@ -2,13 +2,13 @@ import cartesOrigines, cartesSousClasses, cartesDomaines, cartesClasses, cartesF
 
 
 i18n="FR"
-tier="4"
+tier="Tous"
 
 """
 cartesOrigines.exe_unitaire("origine", i18n)
 cartesOrigines.exe_unitaire("ascendance", i18n)
-cartesClasses.exe_unitaire("TOUTES", i18n)
-cartesSousClasses.exe_unitaire(tier, i18n)
 cartesFormeBestiale.exe_unitaire(tier, i18n)
+cartesDomaines.exe_unitaire(tier, "ToutesClasses", i18n)
 """
-cartesDomaines.exe_unitaire(tier, "TOUS", i18n)
+cartesClasses.exe_unitaire("Tous", i18n)
+cartesSousClasses.exe_unitaire(tier, "Tous", i18n)
