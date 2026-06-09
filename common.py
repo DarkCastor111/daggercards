@@ -9,16 +9,16 @@ import os
 
 from translator import translate
 
-VERSION_APP = "APP_05"
+VERSION_APP = "APP_06"
 
-VERSION_DOM = "DOM_05"
-VERSION_COM = "COM_02"
-VERSION_ASC = "ASC_02"
-VERSION_CLA = "CLA_02"
-VERSION_SCL = "SCL_02"
-VERSION_FMB = "BFM_02"
+VERSION_DOM = "DOM_06"
+VERSION_COM = "COM_03"
+VERSION_ASC = "ASC_03"
+VERSION_CLA = "CLA_03"
+VERSION_SCL = "SCL_03"
+VERSION_FMB = "BFM_03"
 
-VERSION_PCK = "PCK_05"
+VERSION_PCK = "PCK_06"
 
 # Directory containing JSON resources. Prefer environment variable `DIR_JSON`.
 # If not set, fall back to the project's original default path.
@@ -82,7 +82,7 @@ def get_domaines_a_imprimer(classe):
         liste_domaines=["Arcana","Midnight"]
     elif classe in ["Warrior","Guerrier"]:
         liste_domaines=["Blade","Bone"]
-    elif classe in ["Wizard","Arcaniste"]:
+    elif classe in ["Wizard","Mage"]:
         liste_domaines=["Codex","Splendor"]
     else:
         liste_domaines=["Arcana","Blade","Bone","Codex","Grace","Midnight","Sage","Splendor","Valor"]

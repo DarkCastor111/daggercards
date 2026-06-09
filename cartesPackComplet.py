@@ -10,6 +10,8 @@ import cartesOrigines, cartesSousClasses, cartesDomaines, cartesClasses
 
 
 print("Nom du script :", sys.argv[0])
+# python cartesPackComplet.py FR Tous warrior
+# python cartesPackComplet.py FR Tous wizard
 
 PARAM_LANG = "FR"
 PARAM_RANG = "Complet"

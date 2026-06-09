@@ -19,7 +19,7 @@ def get_classes_a_imprimer(classe, lang):
         if lang == "EN":
             return ["Bard","Druid","Guardian","Ranger","Rogue","Seraph","Sorcerer","Warrior","Wizard"]
         else:
-            return ["Barde","Druide","Champion","Rôdeur","Roublard","Paladin","Ensorceleur","Guerrier","Arcaniste"]
+            return ["Barde","Druide","Champion","Rôdeur","Roublard","Paladin","Ensorceleur","Guerrier","Mage"]
     else:
         return [classe]
 
