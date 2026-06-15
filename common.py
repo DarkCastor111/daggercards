@@ -9,16 +9,17 @@ import os
 
 from translator import translate
 
-VERSION_APP = "APP_06"
+VERSION_APP = "APP_v06"
 
-VERSION_DOM = "DOM_06"
-VERSION_COM = "COM_03"
-VERSION_ASC = "ASC_03"
-VERSION_CLA = "CLA_03"
-VERSION_SCL = "SCL_03"
-VERSION_FMB = "BFM_03"
+VERSION_DOM = "DOM_v07"
+VERSION_COM = "COM_v04"
+VERSION_ASC = "ASC_v04"
+VERSION_CLA = "CLA_v04"
+VERSION_SCL = "SCL_v04"
+VERSION_FMB = "BFM_v03"
 
-VERSION_PCK = "PCK_06"
+VERSION_PCK = "PCK_v06"
+VERSION_STP = "STP_v02"
 
 # Directory containing JSON resources. Prefer environment variable `DIR_JSON`.
 # If not set, fall back to the project's original default path.

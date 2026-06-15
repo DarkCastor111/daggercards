@@ -48,7 +48,7 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
     "classe sorcerer": {"en": "Sorcerer", "fr": "Ensorceleur", "es": "todo"},
     "trait incantation": {"en": "Spellcast Trait:", "fr": "Trait d'incantation :", "es": "todo"},
     "ppage titre origine": {"en": "COMMUNITY CARDS", "fr": "CARTES DE COMMUNAUTÉ", "es": "todo"},
-    "ppage titre ascendance": {"en": "ANCESTRY CARDS", "fr": "CARTES D'ASCENDANCES", "es": "todo"},
+    "ppage titre ascendance": {"en": "ANCESTRY CARDS", "fr": "CARTES D'ASCENDANCE", "es": "todo"},
     "ppage titre domaine": {"en": "DOMAIN CARDS", "fr": "CARTES DE DOMAINES", "es": "todo"},
     "ppage titre sous classe": {"en": "SUBCLASS CARDS", "fr": "CARTES DE SOUS-CLASSES", "es": "todo"},
     "ppage titre classe": {"en": "CLASS CARDS", "fr": "CARTES DE CLASSES", "es": "todo"},

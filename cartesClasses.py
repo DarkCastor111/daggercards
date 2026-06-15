@@ -38,6 +38,7 @@ def get_classes_a_imprimer(classe, lang):
 def ajouter_cartes(story, classe, lang):
     # Détermination des domaines à imprimer (cas pack classes)
     classes_a_imprimer = get_classes_a_imprimer(classe, lang)
+    print("CLASSES A IMPRIMER : ", classes_a_imprimer)
 
     # Charger le JSON
     with open(common.DIR_JSON + f"{lang}/classes_{lang}.json", "r", encoding="utf-8") as f:
