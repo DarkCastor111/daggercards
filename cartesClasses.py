@@ -50,7 +50,7 @@ def ajouter_cartes(story, classe, lang):
 
             # Nom Classe
             titre = f"""{carte["name"].upper()}"""
-            print("CLASSE : classe :", cl, "titre :", titre)
+            #print("CLASSE : classe :", cl, "titre :", titre)
 
             if f"""{cl.upper()}""" == titre:
                 print("CLASSE : => On imprime les cartes de", titre)

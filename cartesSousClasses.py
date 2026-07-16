@@ -56,7 +56,7 @@ def ajouter_cartes(story, rang, classe, lang):
                 nom_classe = f"""{carte["class"].upper()}""" 
 
                 if f"""{sscl.upper()}""" == nom_classe:
-                    print("SOUS-CLASSE : classe :", sscl, "classe :", nom_classe)
+                    #print("SOUS-CLASSE : classe :", sscl, "classe :", nom_classe)
 
                     pg_titre = [[Paragraph(titre, common.styles["CardTitle"])]]
                     tbl_domain = Table(pg_titre)

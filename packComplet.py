@@ -6,7 +6,7 @@ from reportlab.lib.pagesizes import A4
 import common
 import translator
 import firstPage
-import cartesOrigines, cartesSousClasses, cartesDomaines, cartesClasses 
+import cartesOrigines, cartesSousClasses, cartesDomaines, cartesClasses, cartesFormeBestiale
 
 
 print("Nom du script :", sys.argv[0])
@@ -14,6 +14,16 @@ print("Nom du script :", sys.argv[0])
 # python packComplet.py FR Tous warrior
 # python packComplet.py FR Tous wizard
 # python packComplet.py FR Tous rogue
+
+### Packs de classe
+# python packComplet.py FR Tous bard
+# python packComplet.py FR Tous guardian
+# python packComplet.py FR Tous ranger
+
+### Packs de classe
+# python packComplet.py FR Tous druid
+# python packComplet.py FR Tous seraph
+# python packComplet.py FR Tous sorcerer
 
 PARAM_LANG = "FR"
 PARAM_RANG = "Complet"
@@ -49,7 +59,7 @@ if len(sys.argv) > 3:
         PARAM_CLASSE_STR_COURT = sys.argv[3].upper()
 
 
-fichier_pdf = f"pdf/Pack_{PARAM_CLASSE_STR_COURT}_{PARAM_RANG_STR}_{PARAM_LANG}.pdf"
+fichier_pdf = f"pdf/Pack_{PARAM_CLASSE_STR_COURT}_{PARAM_RANG_STR}_{PARAM_LANG}_{common.VERSION_PCK}.pdf"
 
 # Création du document
 doc = BaseDocTemplate(fichier_pdf, pagesize=A4)
@@ -74,6 +84,9 @@ sommaire_ppage = f"""
 - 6 {translator.translate("ppage titre sous classe", PARAM_LANG).capitalize()} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG_STR}<br/>
 - 42 {translator.translate("ppage titre domaine", PARAM_LANG).capitalize()} {liste_domaines} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG_STR}<br/>
 """
+if PARAM_CLASSE in ['Druid', 'Druide']:
+    sommaire_ppage += f"""- 25 {translator.translate("ppage titre beastform", PARAM_LANG).capitalize()} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG_STR}"""
+
 version_ppage = f"""<br/>
     {translator.translate("ppage sstitre version", PARAM_LANG)} {common.VERSION_PCK}"""
 
@@ -96,6 +109,10 @@ cartesSousClasses.ajouter_cartes(story, PARAM_RANG, PARAM_CLASSE, PARAM_LANG)
 
 # Pages suivantes : cartes domaines
 cartesDomaines.ajouter_cartes(story, PARAM_RANG, PARAM_CLASSE, PARAM_LANG)
+
+# Pages suivantes : si Druide, cartes formes bestiales
+if PARAM_CLASSE in ['Druid', 'Druide']:
+    cartesFormeBestiale.ajouter_cartes(story, PARAM_RANG, PARAM_LANG)
 
 
 # Génération du PDF

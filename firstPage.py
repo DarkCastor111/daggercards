@@ -80,9 +80,11 @@ def ajouter_ppage_legale(story, lang, titre, sstitre, sommaire, version):
     story.append(dh_compat)
     story.append(Spacer(1, 0.5*cm))
 
-
+    # Mentions légales
     txt_copyright = f"""{translate("ppage copyright", lang)}"""
     story.append(Paragraph(txt_copyright, style_legal))
+    txt_copyright_bbe = f"""{translate("ppage copyright bbe", lang)}"""
+    story.append(Paragraph(txt_copyright_bbe, style_legal))
     txt_logo = f"{translate("ppage logo", lang)}"
     story.append(Paragraph(txt_logo, style_legal))
 

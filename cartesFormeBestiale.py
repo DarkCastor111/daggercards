@@ -19,16 +19,16 @@ def get_rangs_a_imprimer(tier):
     liste_rang = []
     if "1" in tier:
         liste_rang.append("1")
-        print(liste_rang)
+        print("FORMES BESTIALES : Paliers : ", liste_rang)
     if "2" in tier:
         liste_rang.extend(["1","2"])
-        print(liste_rang)
+        print("FORMES BESTIALES : Paliers : ", liste_rang)
     if "3" in tier:
         liste_rang.extend(["1","2","3"])
-        print(liste_rang)
-    if "4" in tier:
+        print("FORMES BESTIALES : Paliers : ", liste_rang)
+    if "4" in tier or "Tous" in tier:
         liste_rang.extend(["1","2","3","4"])
-        print(liste_rang)
+        print("FORMES BESTIALES : Paliers : ", liste_rang)
     return liste_rang
 
 def ajouter_cartes(story, rang, lang):
@@ -138,7 +138,7 @@ def ajouter_cartes(story, rang, lang):
 def exe_unitaire(rang, lang):
 
     # Création du document
-    doc = BaseDocTemplate(f"pdf/class_druid_beastform_{lang}_{rang}.pdf", pagesize=A4)
+    doc = BaseDocTemplate(f"pdf/class_druid_beastform_{rang}_{lang}_{common.VERSION_FMB}.pdf", pagesize=A4)
 
     doc.addPageTemplates(common.creer_template(lang))
 
