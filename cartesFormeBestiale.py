@@ -2,11 +2,9 @@
 import json
 import markdown2
 
-from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Frame, PageTemplate, Table, TableStyle
 from reportlab.platypus import BaseDocTemplate, FrameBreak, PageBreak, NextPageTemplate
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.units import cm
 from reportlab.lib.utils import ImageReader
 from reportlab.lib import colors
 
@@ -137,8 +135,10 @@ def ajouter_cartes(story, rang, lang):
 
 def exe_unitaire(rang, lang):
 
+    fichier_pdf=f"pdf/class_druid_beastform_{rang}_{lang}_{common.FORMAT_PAGE_STR}_{common.VERSION_FMB}.pdf"
+
     # Création du document
-    doc = BaseDocTemplate(f"pdf/class_druid_beastform_{rang}_{lang}_{common.VERSION_FMB}.pdf", pagesize=A4)
+    doc = BaseDocTemplate(fichier_pdf, pagesize=common.FORMAT_PAGE)
 
     doc.addPageTemplates(common.creer_template(lang))
 

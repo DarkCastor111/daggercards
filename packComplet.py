@@ -1,7 +1,6 @@
 import sys
 
 from reportlab.platypus import BaseDocTemplate, PageBreak, NextPageTemplate
-from reportlab.lib.pagesizes import A4
 
 import common
 import translator
@@ -11,19 +10,19 @@ import cartesOrigines, cartesSousClasses, cartesDomaines, cartesClasses, cartesF
 
 print("Nom du script :", sys.argv[0])
 ### Packs de classe
-# python packComplet.py FR Tous warrior
-# python packComplet.py FR Tous wizard
-# python packComplet.py FR Tous rogue
+# python packComplet.py EN Tous warrior
+# python packComplet.py EN Tous wizard
+# python packComplet.py EN Tous rogue
 
 ### Packs de classe
-# python packComplet.py FR Tous bard
-# python packComplet.py FR Tous guardian
-# python packComplet.py FR Tous ranger
+# python packComplet.py EN Tous bard
+# python packComplet.py EN Tous guardian
+# python packComplet.py EN Tous ranger
 
 ### Packs de classe
-# python packComplet.py FR Tous druid
-# python packComplet.py FR Tous seraph
-# python packComplet.py FR Tous sorcerer
+# python packComplet.py EN Tous druid
+# python packComplet.py EN Tous seraph
+# python packComplet.py EN Tous sorcerer
 
 PARAM_LANG = "FR"
 PARAM_RANG = "Complet"
@@ -59,10 +58,10 @@ if len(sys.argv) > 3:
         PARAM_CLASSE_STR_COURT = sys.argv[3].upper()
 
 
-fichier_pdf = f"pdf/Pack_{PARAM_CLASSE_STR_COURT}_{PARAM_RANG_STR}_{PARAM_LANG}_{common.VERSION_PCK}.pdf"
+fichier_pdf = f"pdf/Pack_{PARAM_CLASSE_STR_COURT}_{PARAM_LANG}_{common.FORMAT_PAGE_STR}_{common.VERSION_PCK}.pdf"
 
 # Création du document
-doc = BaseDocTemplate(fichier_pdf, pagesize=A4)
+doc = BaseDocTemplate(fichier_pdf, pagesize=common.FORMAT_PAGE)
 
 doc.addPageTemplates(common.creer_template(PARAM_LANG))
 

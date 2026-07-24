@@ -1,7 +1,6 @@
 import sys
 
 from reportlab.platypus import BaseDocTemplate, PageBreak, NextPageTemplate
-from reportlab.lib.pagesizes import A4
 
 import common
 import translator
@@ -29,10 +28,10 @@ if len(sys.argv) > 1:
     #print("common.langage = ", common.langage)
 
 
-fichier_pdf = f"pdf/Pack_{PARAM_CLASSE_STR_COURT}_{PARAM_LANG}_{common.VERSION_STP}.pdf"
+fichier_pdf = f"pdf/Pack_{PARAM_CLASSE_STR_COURT}_{PARAM_LANG}_{common.FORMAT_PAGE_STR}_{common.VERSION_STP}.pdf"
 
 # Création du document
-doc = BaseDocTemplate(fichier_pdf, pagesize=A4)
+doc = BaseDocTemplate(fichier_pdf, pagesize=common.FORMAT_PAGE)
 
 doc.addPageTemplates(common.creer_template(PARAM_LANG))
 

@@ -2,11 +2,9 @@
 import json
 import markdown2
 
-from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Frame, PageTemplate, Table, TableStyle
 from reportlab.platypus import BaseDocTemplate, FrameBreak, PageBreak, NextPageTemplate
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.units import cm
 from reportlab.lib.utils import ImageReader
 from reportlab.lib import colors
 
@@ -135,8 +133,10 @@ def ajouter_cartes(story, classe, lang):
 
 def exe_unitaire(classe, lang):
 
+    fichier_pdf=f"pdf/classes_{lang}_{common.FORMAT_PAGE_STR}_{common.VERSION_CLA}.pdf"
+
     # Création du document
-    doc = BaseDocTemplate(f"pdf/classes_{lang}.pdf", pagesize=A4)
+    doc = BaseDocTemplate(fichier_pdf, pagesize=common.FORMAT_PAGE)
 
     doc.addPageTemplates(common.creer_template(lang))
 

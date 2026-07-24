@@ -16,24 +16,11 @@ style_subversion = ParagraphStyle(name="FPageSubVersion", fontSize=10, leading=1
 style_legal = ParagraphStyle(name="FPageLegal", fontSize=12, leading=13, alignment=4, textColor=colors.black, fontName="Helvetica", spaceAfter=4)
 
 
-cadre_ppage = Frame(
-    1*cm, 1*cm,
-    page_width - 2*cm, page_height - 2*cm,
-    showBoundary=0
-)
-
-ppage_template = PageTemplate(id="title", frames=[cadre_ppage])
+#ppage_template = PageTemplate(id="title", frames=[cadre_ppage])
 
 def getFPageParagraph(titre):
 
     title_text = titre
-    # use a Spacer to center vertically: split usable height in half
-    """
-    usable_height = page_height - 2*cm
-    spacer_height = usable_height / 2.0 - (style_titre.fontSize * 0.6)  # approximate centering
-    if spacer_height < 0:
-        spacer_height = 0
-    """
 
     return Paragraph(title_text, style_titre)
 
@@ -50,27 +37,27 @@ def ajouter_ppage_legale(story, lang, titre, sstitre, sommaire, version):
 
     # Titre
     story.append(Paragraph(titre, style_titre))
-    story.append(Spacer(1, 0.5*cm))
+    story.append(Spacer(1, 0.25*cm))
 
     # Sous Titre
     sous_titre=sstitre
     story.append(Paragraph(sous_titre, style_sstitre))
-    story.append(Spacer(1, 0.5*cm))
+    story.append(Spacer(1, 0.25*cm))
 
     story.append(Paragraph(f"""{translate("ppage sstitre process", lang)}""", style_sstitre))
     story.append(Paragraph("https://mydhblog.com/naissance-des-cartes/", style_sstitre))                    
-    story.append(Spacer(1, 1*cm))
+    story.append(Spacer(1, 0.5*cm))
 
     # Logo du blog
     logo_mydhblog = Image("Images/LogoBlogAtlante_Trp.png", width=3*cm, height=3*cm)
     logo_mydhblog.hAlign = 'CENTER'
     story.append(logo_mydhblog)
     story.append(Paragraph(f"""{translate("ppage sstitre materiel blog", lang)} >> https://myDHblog.com << <br/> {translate("ppage sstitre materiel patreon", lang)} >> https://www.patreon.com/cw/DarkCastor <<""", style_sstitre))
-    story.append(Spacer(1, 1.5*cm))
+    story.append(Spacer(1, 1*cm))
 
     # Contenu du pack
     story.append(Paragraph(sommaire, style_sommaire))
-    story.append(Spacer(1, 1.5*cm))
+    story.append(Spacer(1, 1*cm))
 
 
 

@@ -2,8 +2,6 @@
 import json
 import markdown2
 
-
-from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Frame, PageTemplate, Table, TableStyle
 from reportlab.platypus import BaseDocTemplate, FrameBreak, PageBreak, NextPageTemplate
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
@@ -82,15 +80,15 @@ def ajouter_cartes(story, type_carte, lang):
 
 def exe_unitaire(type_carte, lang):
         
-    fichier_pdf = f"pdf/communities_{lang}.pdf"
+    fichier_pdf = f"pdf/communities_{lang}_{common.FORMAT_PAGE_STR}_{common.VERSION_COM}.pdf"
     version = common.VERSION_COM
 
     if type_carte == "ascendance":
-        fichier_pdf = f"pdf/ancestries_{lang}.pdf"
+        fichier_pdf = f"pdf/ancestries_{lang}_{common.FORMAT_PAGE_STR}_{common.VERSION_ASC}.pdf"
         version = common.VERSION_ASC
 
     # Création du document
-    doc = BaseDocTemplate(fichier_pdf, pagesize=A4)
+    doc = BaseDocTemplate(fichier_pdf, pagesize=common.FORMAT_PAGE)
     
     doc.addPageTemplates(common.creer_template(lang))
 

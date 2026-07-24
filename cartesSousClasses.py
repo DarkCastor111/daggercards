@@ -2,11 +2,9 @@
 import json
 import markdown2
 
-from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Frame, PageTemplate, Table, TableStyle
 from reportlab.platypus import BaseDocTemplate, FrameBreak, PageBreak, NextPageTemplate
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.units import cm
 from reportlab.lib.utils import ImageReader
 from reportlab.lib import colors
 
@@ -102,8 +100,10 @@ def exe_unitaire(rang, classe, lang):
 
     liste_specialisations = get_specialisation_a_imprimer(rang)
 
+    fichier_pdf = f"pdf/subclasses_{lang}_{rang}_{common.FORMAT_PAGE_STR}_{common.VERSION_SCL}.pdf"
+
     # Création du document
-    doc = BaseDocTemplate(f"pdf/subclasses_{lang}_{rang}.pdf", pagesize=A4)
+    doc = BaseDocTemplate(fichier_pdf, pagesize=common.FORMAT_PAGE)
 
     doc.addPageTemplates(common.creer_template(lang))
 
