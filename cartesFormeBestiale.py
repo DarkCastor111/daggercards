@@ -41,6 +41,11 @@ def ajouter_cartes(story, rang, lang):
         # Nom Carte
         titre = f"""{carte["name"].upper()} """
 
+        # Livre de règle
+        id_ruleb = f"""{carte["rulebook"].upper()}"""
+        #print("LIVRE DE REGLE : ", id_ruleb)
+
+
         pg_titre = [[Paragraph(titre, common.styles["CardTitle"])]]
         tbl_capa = Table(pg_titre)
         tbl_capa.setStyle(TableStyle([('BACKGROUND',(0,0),(0,0),['HORIZONTAL', common.domain_bg_colors.get("Sage", colors.white),common.domain_bg_colors.get("Arcana", colors.white)]),

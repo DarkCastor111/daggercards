@@ -44,6 +44,11 @@ def ajouter_cartes(story, rang, classe, lang):
         for i, carte in enumerate(cartes):
             niveau_carte = carte['level']
             domaine_carte = carte['domain']
+
+            # Livre de règle
+            id_ruleb = f"""{carte["rulebook"].upper()}"""
+            #print("LIVRE DE REGLE : ", id_ruleb)
+
             if niveau_carte in niveaux_a_imprimer and domaine_carte == domaine :
 
                 # Titre : Domaine - Niveau - Type

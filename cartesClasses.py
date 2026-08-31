@@ -50,6 +50,10 @@ def ajouter_cartes(story, classe, lang):
             titre = f"""{carte["name"].upper()}"""
             #print("CLASSE : classe :", cl, "titre :", titre)
 
+            # Livre de règle
+            id_ruleb = f"""{carte["rulebook"].upper()}"""
+            #print("LIVRE DE REGLE : ", id_ruleb)
+
             if f"""{cl.upper()}""" == titre:
                 print("CLASSE : => On imprime les cartes de", titre)
                 pg_titre = [[Paragraph(titre, common.styles["CardTitle"])]]

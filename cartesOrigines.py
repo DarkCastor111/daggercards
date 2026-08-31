@@ -29,6 +29,11 @@ def ajouter_cartes(story, type_carte, lang):
         # Titre de la carte
         titre=f"&nbsp;{carte["name"].upper()}"
 
+        # Livre de règle
+        id_ruleb = f"""{carte["rulebook"].upper()}"""
+        #print("LIVRE DE REGLE : ", id_ruleb)
+
+
         if type_carte == "origine":
             card_titre_style = ParagraphStyle(
                 name="CardTitre_Origine",

@@ -50,6 +50,11 @@ def ajouter_cartes(story, rang, classe, lang):
                 # Nom Sous Classe
                 titre = f"""{carte["name"].upper()}"""
 
+                # Livre de règle
+                id_ruleb = f"""{carte["rulebook"].upper()}"""
+                #print("LIVRE DE REGLE : ", id_ruleb)
+
+
                 # Nom Classe
                 nom_classe = f"""{carte["class"].upper()}""" 
 
