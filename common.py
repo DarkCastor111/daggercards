@@ -38,8 +38,8 @@ FORMAT_PAGE_STR = "A4"
 page_width, page_height = FORMAT_PAGE
 
 cols, rows = 3, 3
-card_width = 6.35*cm
-card_height = 8.8*cm
+card_width = (6.35)*cm
+card_height = (8.8)*cm
 
 # Calcul des marges pour centrer les cartes quelque soit le format
 marge_x = (page_width - (card_width * 3)) / 2
@@ -57,6 +57,7 @@ domain_bg_colors = {
     "Sage": colors.darkgreen,
     "Splendor": colors.goldenrod,
     "Valor": colors.darkorange,
+    "Dread": colors.darkslateblue,
 }
 
 domain_txt_colors = {
@@ -69,6 +70,7 @@ domain_txt_colors = {
     "Sage": colors.snow,
     "Splendor": colors.snow,
     "Valor": colors.snow,
+    "Dread": colors.snow,
 }
 
 def get_domaines_a_imprimer(classe):
@@ -90,10 +92,33 @@ def get_domaines_a_imprimer(classe):
         liste_domaines=["Blade","Bone"]
     elif classe in ["Wizard","Mage"]:
         liste_domaines=["Codex","Splendor"]
+    elif classe in ["Assassin"]:
+        liste_domaines=["Blade","Midnigth"]
+    elif classe in ["Brawler"]:
+        liste_domaines=["Valor","Bone"]
+    elif classe in ["Warlock"]:
+        liste_domaines=["Dread","Grace"]
+    elif classe in ["Witch"]:
+        liste_domaines=["Sage","Dread"]
     else:
-        liste_domaines=["Arcana","Blade","Bone","Codex","Grace","Midnight","Sage","Splendor","Valor"]
+        liste_domaines=["Arcana","Blade","Bone","Codex","Grace","Midnight","Sage","Splendor","Valor", "Dread"]
     print("DOMAINE : Classe :", classe, "Domaines :", liste_domaines)
     return liste_domaines
+
+def get_classes_a_imprimer(classe, lang):
+    if classe == "Tous":
+        if lang == "EN":
+            return ["Bard","Druid","Guardian","Ranger","Rogue","Seraph","Sorcerer","Warrior","Wizard","Assassin","Brawler","Warlock","Witch"]
+        else:
+            return ["Barde","Druide","Champion","Rôdeur","Roublard","Paladin","Ensorceleur","Guerrier","Mage","Assassin","Bagarreur","Occultiste","Sorcière"]
+    elif classe == "HnF":
+        if lang == "EN":
+            return ["Assassin","Brawler","Warlock","Witch"]
+        else:
+            return ["Assassin","Bagarreur","Occultiste","Sorcière"]
+    else:
+        return [classe]
+
 
 # Styles
 #############################

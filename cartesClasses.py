@@ -24,18 +24,10 @@ styles.add(ParagraphStyle(name="CardType", fontSize=10, leading=11, alignment=1,
 """
 
 
-def get_classes_a_imprimer(classe, lang):
-    if classe == "Tous":
-        if lang == "EN":
-            return ["Bard","Druid","Guardian","Ranger","Rogue","Seraph","Sorcerer","Warrior","Wizard"]
-        else:
-            return ["Barde","Druide","Champion","Rôdeur","Roublard","Paladin","Ensorceleur","Guerrier","Mage"]
-    else:
-        return [classe]
 
 def ajouter_cartes(story, classe, lang):
     # Détermination des domaines à imprimer (cas pack classes)
-    classes_a_imprimer = get_classes_a_imprimer(classe, lang)
+    classes_a_imprimer = common.get_classes_a_imprimer(classe, lang)
     print("CLASSES A IMPRIMER : ", classes_a_imprimer)
 
     # Charger le JSON

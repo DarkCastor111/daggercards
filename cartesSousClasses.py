@@ -12,15 +12,6 @@ import common
 from translator import translate
 import firstPage
 
-def get_classes_a_imprimer(classe, lang):
-    if classe == "Tous":
-        if lang == "EN":
-            return ["Bard","Druid","Guardian","Ranger","Rogue","Seraph","Sorcerer","Warrior","Wizard"]
-        else:
-            return ["Barde","Druide","Champion","Rôdeur","Roublard","Paladin","Ensorceleur","Guerrier","Mage"]
-    else:
-        return [classe]
-
 def get_specialisation_a_imprimer(tier):
     liste_specialisations = []
     if "1" in tier or "2" in tier or "Tous" in tier :
@@ -36,7 +27,7 @@ def get_specialisation_a_imprimer(tier):
 def ajouter_cartes(story, rang, classe, lang):
     
     specialisations_a_imprimer = get_specialisation_a_imprimer(rang)
-    classes_a_imprimer = get_classes_a_imprimer(classe, lang)
+    classes_a_imprimer = common.get_classes_a_imprimer(classe, lang)
     
     # Charger le JSON
     with open(common.DIR_JSON + f"{lang}/subclasses_{lang}.json", "r", encoding="utf-8") as f:

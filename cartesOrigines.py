@@ -68,7 +68,7 @@ def ajouter_cartes(story, type_carte, lang):
 
         # Capacités
         for j, capa in enumerate(carte["feats"]):
-            capacite = markdown2.markdown(f"""<b>{capa["name"]}</b>&nbsp;: {capa["text"]}""")
+            capacite = markdown2.markdown(f"""<b>{capa["name"]}</b>&nbsp;: {capa["text"].replace("\n", "<br/>")}""")
             pg_capa = Paragraph(capacite, common.styles["CardText"])
             story.append(pg_capa)
 
