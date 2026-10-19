@@ -92,13 +92,13 @@ def get_domaines_a_imprimer(classe):
         liste_domaines=["Blade","Bone"]
     elif classe in ["Wizard","Mage"]:
         liste_domaines=["Codex","Splendor"]
-    elif classe in ["Assassin"]:
-        liste_domaines=["Blade","Midnigth"]
-    elif classe in ["Brawler"]:
+    elif classe in ["Assassin", "Assassin"]:
+        liste_domaines=["Blade","Midnight"]
+    elif classe in ["Brawler", "Bagarreur"]:
         liste_domaines=["Valor","Bone"]
-    elif classe in ["Warlock"]:
+    elif classe in ["Warlock", "Occultiste"]:
         liste_domaines=["Dread","Grace"]
-    elif classe in ["Witch"]:
+    elif classe in ["Witch", "Sorcière"]:
         liste_domaines=["Sage","Dread"]
     else:
         liste_domaines=["Arcana","Blade","Bone","Codex","Grace","Midnight","Sage","Splendor","Valor", "Dread"]

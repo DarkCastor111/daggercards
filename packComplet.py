@@ -24,6 +24,13 @@ print("Nom du script :", sys.argv[0])
 # python packComplet.py EN Tous seraph
 # python packComplet.py EN Tous sorcerer
 
+### Packs de classe
+# python packComplet.py EN Tous assassin
+# python packComplet.py EN Tous warlock
+# python packComplet.py EN Tous brawler
+# python packComplet.py EN Tous witch
+
+
 PARAM_LANG = "FR"
 PARAM_RANG = "Complet"
 PARAM_RANG_STR = "Complet"
@@ -76,9 +83,11 @@ sstitre_ppage = f"""{translator.translate("ppage sstitre langue", PARAM_LANG)} {
 
 liste_domaines = common.get_domaines_a_imprimer(PARAM_CLASSE)
 
+
+#- 15 {translator.translate("ppage titre origine", PARAM_LANG).capitalize()} <br/>
+#- 24 {translator.translate("ppage titre ascendance", PARAM_LANG).capitalize()} <br/>
+
 sommaire_ppage = f"""
-- 9 {translator.translate("ppage titre origine", PARAM_LANG).capitalize()} <br/>
-- 18 {translator.translate("ppage titre ascendance", PARAM_LANG).capitalize()} <br/>
 - 3 {translator.translate("ppage titre classe", PARAM_LANG).capitalize()} <br/>
 - 6 {translator.translate("ppage titre sous classe", PARAM_LANG).capitalize()} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG_STR}<br/>
 - 42 {translator.translate("ppage titre domaine", PARAM_LANG).capitalize()} {liste_domaines} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG_STR}<br/>
@@ -91,14 +100,14 @@ version_ppage = f"""<br/>
 
 firstPage.ajouter_ppage_legale(story, PARAM_LANG, titre_ppage, sstitre_ppage, sommaire_ppage, version_ppage)
 
-# Pages suivantes : cartes origines
-
 story.append(NextPageTemplate('grid'))
 story.append(PageBreak())
-cartesOrigines.ajouter_cartes(story, "origine", PARAM_LANG)
 
-# Pages suivantes : cartes ascendances
-cartesOrigines.ajouter_cartes(story, "ascendance", PARAM_LANG)
+# Pages suivantes : cartes origines (supprimées du pack)
+#cartesOrigines.ajouter_cartes(story, "origine", PARAM_LANG)
+
+# Pages suivantes : cartes ascendances (supprimées du pack)
+#cartesOrigines.ajouter_cartes(story, "ascendance", PARAM_LANG)
 
 # Pages suivantes : cartes classes
 cartesClasses.ajouter_cartes(story, PARAM_CLASSE, PARAM_LANG)
