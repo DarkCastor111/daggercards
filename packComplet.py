@@ -5,7 +5,8 @@ from reportlab.platypus import BaseDocTemplate, PageBreak, NextPageTemplate
 import common
 import translator
 import firstPage
-import cartesOrigines, cartesSousClasses, cartesDomaines, cartesClasses, cartesFormeBestiale
+import cartesOrigines, cartesSousClasses, cartesDomaines, cartesClasses
+import cartesFormeBestiale, cartesPostures
 
 
 print("Nom du script :", sys.argv[0])
@@ -70,7 +71,7 @@ fichier_pdf = f"pdf/Pack_{PARAM_CLASSE_STR_COURT}_{PARAM_LANG}_{common.FORMAT_PA
 # Création du document
 doc = BaseDocTemplate(fichier_pdf, pagesize=common.FORMAT_PAGE)
 
-doc.addPageTemplates(common.creer_template(PARAM_LANG))
+doc.addPageTemplates(common.creer_template_postures(PARAM_LANG))
 
 # Construction du contenu
 story = []
@@ -94,6 +95,11 @@ sommaire_ppage = f"""
 """
 if PARAM_CLASSE in ['Druid', 'Druide']:
     sommaire_ppage += f"""- 25 {translator.translate("ppage titre beastform", PARAM_LANG).capitalize()} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG_STR}"""
+
+if PARAM_CLASSE in ['Brawler', 'Bagarreur']:
+    sommaire_ppage += f"""- 2 {translator.translate("ppage titre stances rules", PARAM_LANG).capitalize()}<br/> 
+                          - 16 {translator.translate("ppage titre stances", PARAM_LANG).capitalize()} - {translator.translate("ppage sstitre rang", PARAM_LANG)} {PARAM_RANG_STR}
+    """
 
 version_ppage = f"""<br/>
     {translator.translate("ppage sstitre version", PARAM_LANG)} {common.VERSION_PCK}"""
@@ -122,6 +128,12 @@ cartesDomaines.ajouter_cartes(story, PARAM_RANG, PARAM_CLASSE, PARAM_LANG)
 if PARAM_CLASSE in ['Druid', 'Druide']:
     cartesFormeBestiale.ajouter_cartes(story, PARAM_RANG, PARAM_LANG)
 
+# Pages suivantes : si Bagarreur, cartes postures
+if PARAM_CLASSE in ['Brawler', 'Bagarreur']:
+    cartesPostures.ajouter_cartes(story, PARAM_RANG, PARAM_LANG)
+    story.append(NextPageTemplate('minigrid'))
+    story.append(PageBreak())
+    cartesPostures.ajouter_mini_cartes(story, PARAM_RANG, PARAM_LANG)
 
 # Génération du PDF
 doc.build(story)

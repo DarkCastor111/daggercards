@@ -9,17 +9,18 @@ import os
 
 from translator import translate
 
-VERSION_APP = "APP_v09"
+VERSION_APP = "APP_v10"
 
 VERSION_DOM = "DOM_v08"
 VERSION_COM = "COM_v05"
 VERSION_ASC = "ASC_v05"
-VERSION_CLA = "CLA_v05"
-VERSION_SCL = "SCL_v05"
-VERSION_FMB = "BFM_v04"
+VERSION_CLA = "CLA_v06"
+VERSION_SCL = "SCL_v06"
+VERSION_BFM = "BFM_v05"
+VERSION_STA = "STA_v01"
 
-VERSION_PCK = "PCK_v09"
-VERSION_STP = "STP_v09"
+VERSION_PCK = "PCK_v10"
+VERSION_STP = "STP_v10"
 
 # Directory containing JSON resources. Prefer environment variable `DIR_JSON`.
 # If not set, fall back to the project's original default path.
@@ -41,9 +42,18 @@ cols, rows = 3, 3
 card_width = (6.35)*cm
 card_height = (8.8)*cm
 
+mini_cols, mini_rows = 4, 4
+mini_card_width = (4.1)*cm
+mini_card_height = (6.3)*cm
+
 # Calcul des marges pour centrer les cartes quelque soit le format
-marge_x = (page_width - (card_width * 3)) / 2
-marge_y = (page_height - (card_height * 3)) / 2
+marge_x = (page_width - (card_width * cols)) / 2
+marge_y = (page_height - (card_height * rows)) / 2
+
+mini_marge_x = (page_width - (mini_card_width * mini_cols)) / 2
+mini_marge_y = (page_height - (mini_card_height * mini_rows)) / 2
+
+
 
 # Couleurs
 #############################
@@ -130,6 +140,9 @@ styles.add(ParagraphStyle(name="CardPres", fontSize=8, leading=9, alignment=4, t
 styles.add(ParagraphStyle(name="CardText", fontSize=8, leading=9, alignment=4, fontName="Helvetica", spaceAfter=4))
 styles.add(ParagraphStyle(name="CardFooter", fontSize=7, leading=8, alignment=0, textColor=colors.grey, fontName="Helvetica-Oblique"))
 styles.add(ParagraphStyle(name="CardSub", fontSize=9, leading=10, alignment=2, textColor=colors.black, fontName="Helvetica-Bold"))
+styles.add(ParagraphStyle(name="MiniCardTitle", fontSize=9, leading=11, alignment=0, textColor=colors.snow, fontName="Helvetica-Bold"))
+styles.add(ParagraphStyle(name="MiniCardSub", fontSize=8, leading=9, alignment=2, textColor=colors.black, fontName="Helvetica-Bold"))
+styles.add(ParagraphStyle(name="MiniCardText", fontSize=8, leading=9, alignment=4, fontName="Helvetica", spaceAfter=4))
 
 cards_frames = []
 for row in range(rows):
@@ -154,7 +167,48 @@ def add_background_FR(canvas, doc):
     add_footer(canvas, doc, "FR")
     add_watermark(canvas, doc)
 
+def add_background_petites(canvas, doc):
+    add_footer_petites(canvas, doc)
+
+
 # Définir un template de page avec un pied de page
+def add_footer_petites(canvas, doc):
+    canvas.saveState()
+    canvas.setFont("Helvetica-Oblique", 6)
+
+    # Image de fond
+    logo_path = "Images/DH_logo-100.png"
+    logo_image = ImageReader(logo_path)
+
+    for row in range(mini_rows):
+        for col in range(mini_cols):
+            x = mini_marge_x + col * (mini_card_width + 0*cm)
+            y = page_height - (mini_marge_y + (row + 1) * (mini_card_height + 0*cm))
+            
+            canvas.drawString(
+                x + 0.2*cm, 
+                y + 0.2*cm + 8,
+                "Daggerheart™ Compatible."
+            )
+
+            canvas.drawString(
+                x + 0.2*cm, 
+                y + 0.2*cm,
+                "Terms at Daggerheart.com"
+            )
+
+            canvas.drawImage(
+                logo_image,
+                #x + card_width - 0.4*cm - 0.2*cm, y + 0.3*cm + 8,
+                x + mini_card_width - 0.6*cm, y + 0.2*cm,
+                0.4*cm, 0.4*cm,
+                preserveAspectRatio=True,
+                mask='auto'
+            )
+
+    canvas.restoreState()
+
+
 def add_footer(canvas, doc, lang):
     canvas.saveState()
     canvas.setFont("Helvetica-Oblique", 6)
@@ -210,11 +264,9 @@ def add_watermark(canvas, doc):
                     f"{wm}"
                 )
 
-
-
     canvas.restoreState()
 
-def creer_template(lang):
+def creer_template_ppage(lang):
     # Définition du template pour la première page
     cadre_ppage = Frame(
         1*cm, 1*cm,
@@ -226,6 +278,9 @@ def creer_template(lang):
 
     template_ppage = PageTemplate(id="title", frames=[cadre_ppage])
 
+    return template_ppage
+
+def creer_template_cartes(lang):
     # Définition du template pour les cartes
     # Cadre des cartes (3x3 par page)
     frames_3x3 = []
@@ -249,8 +304,39 @@ def creer_template(lang):
     if lang == "FR":
         template_cartes = PageTemplate(id="grid", frames=frames_3x3, onPage=add_background_FR)
 
+    return template_cartes
 
-    return [template_ppage, template_cartes]
+def creer_template_petites_cartes(lang):
+    # Définition du template pour les cartes
+    # Cadre des cartes (3x3 par page)
+    frames_4x4 = []
+    for row in range(mini_rows):
+        for col in range(mini_cols):
+            # x = col * card_width
+            # y = page_height - (row + 1) * card_height
+            x = mini_marge_x + col * (mini_card_width + 0*cm)
+            y = page_height - (mini_marge_y + (row + 1) * (mini_card_height + 0*cm))
+            frames_4x4.append(
+                Frame(
+                    x, y,
+                    mini_card_width, mini_card_height,
+                    showBoundary=1  # Affiche le contour de la carte
+                )
+            )
+
+    # Définition du template pour les cartes, le background dépend de la langue
+    # Par défaut anglais
+    template_pt_cartes = PageTemplate(id="minigrid", frames=frames_4x4, onPage=add_background_petites)
+
+    return template_pt_cartes
+ 
+def creer_template_std(lang):
+    return [creer_template_ppage(lang), creer_template_cartes(lang)]
+
+def creer_template_postures(lang):
+    return [creer_template_ppage(lang), creer_template_cartes(lang), creer_template_petites_cartes(lang)]
+
+
 
 def premieres_phrases(text, nb_phrases):
     matches = re.findall(r'[^.?!]*[.?!]', text)

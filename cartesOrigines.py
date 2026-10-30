@@ -95,7 +95,7 @@ def exe_unitaire(type_carte, lang):
     # Création du document
     doc = BaseDocTemplate(fichier_pdf, pagesize=common.FORMAT_PAGE)
     
-    doc.addPageTemplates(common.creer_template(lang))
+    doc.addPageTemplates(common.creer_template_std(lang))
 
     # Construction du contenu
     story = []

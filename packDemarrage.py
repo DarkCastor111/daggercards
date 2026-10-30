@@ -33,7 +33,7 @@ fichier_pdf = f"pdf/Pack_{PARAM_CLASSE_STR_COURT}_{PARAM_LANG}_{common.FORMAT_PA
 # Création du document
 doc = BaseDocTemplate(fichier_pdf, pagesize=common.FORMAT_PAGE)
 
-doc.addPageTemplates(common.creer_template(PARAM_LANG))
+doc.addPageTemplates(common.creer_template_std(PARAM_LANG))
 
 # Construction du contenu
 story = []

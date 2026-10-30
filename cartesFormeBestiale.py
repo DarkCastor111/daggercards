@@ -140,12 +140,12 @@ def ajouter_cartes(story, rang, lang):
 
 def exe_unitaire(rang, lang):
 
-    fichier_pdf=f"pdf/class_druid_beastform_{rang}_{lang}_{common.FORMAT_PAGE_STR}_{common.VERSION_FMB}.pdf"
+    fichier_pdf=f"pdf/class_druid_beastform_{rang}_{lang}_{common.FORMAT_PAGE_STR}_{common.VERSION_BFM}.pdf"
 
     # Création du document
     doc = BaseDocTemplate(fichier_pdf, pagesize=common.FORMAT_PAGE)
 
-    doc.addPageTemplates(common.creer_template(lang))
+    doc.addPageTemplates(common.creer_template_std(lang))
 
     # Construction du contenu
     story = []
@@ -156,7 +156,7 @@ def exe_unitaire(rang, lang):
     sstitre_ppage += f"""<br/>
     {translate("ppage sstitre langue", lang)} {lang} {translate("ppage sstitre trad", lang)}"""
 
-    version_ppage = f"""{translate("ppage sstitre version", lang)} {common.VERSION_FMB}"""
+    version_ppage = f"""{translate("ppage sstitre version", lang)} {common.VERSION_BFM}"""
 
     firstPage.ajouter_ppage_legale(story, lang, titre_ppage, sstitre_ppage, "", version_ppage)
 
